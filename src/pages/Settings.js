@@ -1,12 +1,12 @@
 import React from 'react';
 import { Box, Heading } from '@chakra-ui/react';
 
-function Profile() {
+function Settings() {
   return (
     <Box w="100vw" h="100vh" bg="orange.100" pt={20}>
-      <Heading>Profile</Heading>
+      <Heading>Settings</Heading>
     </Box>
   );
 }
 
-export default Profile;
+export default Settings;

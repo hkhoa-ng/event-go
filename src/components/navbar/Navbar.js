@@ -13,12 +13,17 @@ import {
   MenuList,
   MenuItem,
   Text,
-  Link,
   MenuDivider,
   useColorModeValue,
   Heading,
+  InputGroup,
+  InputRightElement,
+  InputLeftElement,
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import { ReactNode } from 'react';
+import { FaSearch, FaPrint, FaPlus } from 'react-icons/fa';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 const IconButton = ({ children }) => {
   return (
@@ -43,13 +48,13 @@ const Navbar = props => {
       border="0 solid #e5e7eb"
       position="fixed"
       top="0"
-      bg="coolBlack.700"
+      bg="brand.600"
       width="100%"
       zIndex="1"
     >
-      <Container maxW="1280px" px={4} mx="auto">
+      <Container minW="90%" px={4} mx="auto">
         <HStack>
-          <Link href={`/`} _hover={{ textDecoration: 'none' }}>
+          <Link to={`/`} _hover={{ textDecoration: 'none' }}>
             <Image
               alt="Event-Go logo"
               w={'auto'}
@@ -58,23 +63,35 @@ const Navbar = props => {
             />
           </Link>
           <Spacer />
-          <Input
-            maxW={{ base: '15rem', md: '25rem', lg: '35rem' }}
-            placeholder="Find events, people, places..."
-            borderColor="creamWhite"
-            borderRadius="5px"
-          />
+          <InputGroup maxW={{ base: '15rem', md: '25rem', lg: '35rem' }}>
+            <Input
+              variant="outline"
+              placeholder="Find events, people, places..."
+              borderRadius="5px"
+            />
+            <InputLeftElement children={<FaSearch />} />
+            {/* <Button
+                aria-label="Search button"
+                variant="solid"
+                fontWeight="medium"
+              >
+                Search
+              </Button> */}
+
+            {/* </InputLeftElement> */}
+          </InputGroup>
           <Spacer />
           <HStack spacing={3}>
             <Button
-              color="coolBlack.700"
-              rounded="md"
-              bg="mandarin.200"
-              _hover={{ bg: 'mandarin.600' }}
-              display={{ base: 'none', md: 'block' }}
+              color="white"
+              bg="frenchPink.300"
+              leftIcon={<FaPlus />}
+              _hover={{ bg: 'frenchPink.400' }}
+              display={{ base: 'none', md: 'flex' }}
             >
-              Add an event
+              Add event
             </Button>
+
             <Menu isLazy>
               <MenuButton as={Button} size="sm" px={0} py={0} rounded="full">
                 <Avatar
@@ -82,14 +99,9 @@ const Navbar = props => {
                   src={'https://avatars2.githubusercontent.com/u/37842853?v=4'}
                 />
               </MenuButton>
-              <MenuList
-                zIndex={5}
-                border="2px solid"
-                borderColor={useColorModeValue('gray.700', 'gray.100')}
-                boxShadow="4px 4px 0"
-              >
+              <MenuList zIndex={5} bg="brand.600">
                 <Link
-                  href={`/${props.username}`}
+                  to={`/${props.username}`}
                   _hover={{ textDecoration: 'none' }}
                 >
                   <MenuItem>
@@ -102,17 +114,27 @@ const Navbar = props => {
                   </MenuItem>
                 </Link>
                 <MenuDivider />
-                <Link href={`/`} _hover={{ textDecoration: 'none' }}>
+                <Link
+                  to={`/add`}
+                  _hover={{ textDecoration: 'none' }}
+                  display={{ base: 'flex', md: 'none' }}
+                >
+                  <MenuItem display={{ base: 'flex', md: 'none' }}>
+                    <Text fontWeight="500">Add event</Text>
+                  </MenuItem>
+                </Link>
+                <MenuDivider />
+                <Link to={`/`} _hover={{ textDecoration: 'none' }}>
                   <MenuItem>
                     <Text fontWeight="500">Home</Text>
                   </MenuItem>
                 </Link>
-                <Link href={`/cart`} _hover={{ textDecoration: 'none' }}>
+                <Link to={`/shopping-cart`} _hover={{ textDecoration: 'none' }}>
                   <MenuItem>
                     <Text fontWeight="500">Shopping Cart</Text>
                   </MenuItem>
                 </Link>
-                <Link href={`/settings`} _hover={{ textDecoration: 'none' }}>
+                <Link to={`/settings`} _hover={{ textDecoration: 'none' }}>
                   <MenuItem>
                     <Text fontWeight="500">Settings</Text>
                   </MenuItem>
