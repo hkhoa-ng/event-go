@@ -136,25 +136,53 @@ function Categories() {
             <PopoverCloseButton />
             <PopoverBody>
               <Wrap pl="5px" py="10px">
-                <Button colorScheme="brand" leftIcon={<FaHome />}>
+                <Button
+                  colorScheme="gray"
+                  variant="solid"
+                  leftIcon={<FaHome />}
+                >
                   Near me
                 </Button>
-                <Button colorScheme="brand" leftIcon={<FaHome />}>
+                <Button
+                  colorScheme="gray"
+                  variant="solid"
+                  leftIcon={<FaHome />}
+                >
                   Popular with friends
                 </Button>
-                <Button colorScheme="brand" leftIcon={<FaHome />}>
+                <Button
+                  colorScheme="gray"
+                  variant="solid"
+                  leftIcon={<FaHome />}
+                >
                   Night time
                 </Button>
-                <Button colorScheme="brand" leftIcon={<FaHome />}>
+                <Button
+                  colorScheme="gray"
+                  variant="solid"
+                  leftIcon={<FaHome />}
+                >
                   Sports
                 </Button>
-                <Button colorScheme="brand" leftIcon={<FaHome />}>
+                <Button
+                  colorScheme="gray"
+                  variant="solid"
+                  leftIcon={<FaHome />}
+                >
                   Musical
                 </Button>
-                <Button colorScheme="brand" leftIcon={<FaHome />}>
+                <Button
+                  colorScheme="gray"
+                  variant="solid"
+                  leftIcon={<FaHome />}
+                >
                   Academic
                 </Button>
-                <Button colorScheme="brand" leftIcon={<FaHome />}>
+                <Button
+                  colorScheme="gray"
+                  variant="solid"
+                  leftIcon={<FaHome />}
+                >
                   Courses
                 </Button>
               </Wrap>

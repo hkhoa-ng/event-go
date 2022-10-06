@@ -50,11 +50,11 @@ const Navbar = props => {
       top="0"
       bg="brand.600"
       width="100%"
-      zIndex="1"
+      zIndex="10"
     >
       <Container minW="90%" px={4} mx="auto">
         <HStack>
-          <Link to={`/`} _hover={{ textDecoration: 'none' }}>
+          <Link to={`/event-go/`} _hover={{ textDecoration: 'none' }}>
             <Image
               alt="Event-Go logo"
               w={'auto'}
@@ -124,17 +124,23 @@ const Navbar = props => {
                   </MenuItem>
                 </Link>
                 <MenuDivider />
-                <Link to={`/`} _hover={{ textDecoration: 'none' }}>
+                <Link to={`/event-go/`} _hover={{ textDecoration: 'none' }}>
                   <MenuItem>
                     <Text fontWeight="500">Home</Text>
                   </MenuItem>
                 </Link>
-                <Link to={`/shopping-cart`} _hover={{ textDecoration: 'none' }}>
+                <Link
+                  to={`/event-go/shopping-cart`}
+                  _hover={{ textDecoration: 'none' }}
+                >
                   <MenuItem>
                     <Text fontWeight="500">Shopping Cart</Text>
                   </MenuItem>
                 </Link>
-                <Link to={`/settings`} _hover={{ textDecoration: 'none' }}>
+                <Link
+                  to={`/event-go/settings`}
+                  _hover={{ textDecoration: 'none' }}
+                >
                   <MenuItem>
                     <Text fontWeight="500">Settings</Text>
                   </MenuItem>

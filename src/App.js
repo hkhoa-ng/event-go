@@ -8,19 +8,31 @@ import Home from './pages/Home';
 import Cart from './pages/Cart';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
+import EventDetail from './pages/EventDetail';
 
 import Navbar from './components/navbar/Navbar';
 
 function App() {
   const username = '_hkhoa';
   const name = 'Khoa Nguyen';
+  const event = {
+    name: 'Random event with a very long long long name',
+    url: 'a-random-event',
+    description: 'Some very random description',
+    img: 'https://images.unsplash.com/photo-1549451371-64aa98a6f660?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
+  };
+
   return (
     <ChakraProvider theme={myTheme}>
       <Routes>
-        <Route path="/" element={<Home name={name} />} />
-        <Route path="/shopping-cart" element={<Cart />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path={`/${username}`} element={<Profile />} />
+        <Route path="/event-go/" element={<Home name={name} />} />
+        <Route path="/event-go/shopping-cart" element={<Cart />} />
+        <Route path="/event-go/settings" element={<Settings />} />
+        <Route
+          path={`/event-go/${event.url}`}
+          element={<EventDetail {...event} />}
+        />
+        <Route path={`/event-go/${username}`} element={<Profile />} />
       </Routes>
       <Navbar username={username} name="Khoa Nguyen" />
     </ChakraProvider>
