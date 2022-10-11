@@ -38,7 +38,7 @@ function Categories() {
       gap={5}
       bg="brand.700"
       position="fixed"
-      zIndex={1}
+      zIndex={5}
       p={3}
       pt={{ base: '3', md: '10' }}
       top={{ base: '14', md: '10' }}

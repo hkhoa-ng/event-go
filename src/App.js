@@ -9,11 +9,12 @@ import Cart from './pages/Cart';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import EventDetail from './pages/EventDetail';
+import Login from './pages/Login';
 
 import Navbar from './components/navbar/Navbar';
 
 function App() {
-  const username = '_hkhoa';
+  const username = 'hkhoa';
   const name = 'Khoa Nguyen';
   const event = {
     name: 'Random event with a very long long long name',
@@ -33,8 +34,8 @@ function App() {
           element={<EventDetail {...event} />}
         />
         <Route path={`/event-go/${username}`} element={<Profile />} />
+        <Route path={`/event-go/login`} element={<Login />} />
       </Routes>
-      <Navbar username={username} name="Khoa Nguyen" />
     </ChakraProvider>
   );
 }

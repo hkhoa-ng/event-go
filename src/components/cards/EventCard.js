@@ -24,18 +24,10 @@ function EventCard() {
       >
         <Image
           maxW={{ base: '50%', md: '100%' }}
-          position="relative"
           borderRadius={5}
           src="https://images.unsplash.com/photo-1516981442399-a91139e20ff8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
         />
-        <Badge
-          position="absolute"
-          variant="solid"
-          transform={'translate(20%, 10%)'}
-          colorScheme="telegram"
-        >
-          Music
-        </Badge>
+
         <VStack alignItems="flex-start" gap={0}>
           <Heading
             fontSize={{ base: 'lg', xl: 'xl' }}
@@ -44,6 +36,9 @@ function EventCard() {
           >
             Some random event with long name!
           </Heading>
+          <Badge variant="solid" colorScheme="telegram">
+            Music
+          </Badge>
           <Text fontWeight={'medium'}>18.11.2022</Text>
         </VStack>
       </VStack>

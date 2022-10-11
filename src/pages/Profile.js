@@ -1,10 +1,15 @@
 import React from 'react';
 import { Box, Heading } from '@chakra-ui/react';
 
+import Navbar from '../components/navbar/Navbar';
+
 function Profile() {
   return (
-    <Box w="100vw" h="100vh" bg="orange.100" pt={20}>
-      <Heading>Profile</Heading>
+    <Box>
+      <Navbar username={'hkhoa'} name="Khoa Nguyen" />
+      <Box mt={20} px={10}>
+        <Heading>Profile</Heading>
+      </Box>
     </Box>
   );
 }

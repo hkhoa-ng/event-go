@@ -21,7 +21,7 @@ function EventContainer(props) {
       <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3, xl: 4 }}
         spacing="10px"
-        maxW="90%"
+        maxW={{ base: '100%', md: '90%' }}
       >
         <EventCard />
         <EventCard />

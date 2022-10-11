@@ -101,7 +101,7 @@ const Navbar = props => {
               </MenuButton>
               <MenuList zIndex={5} bg="brand.600">
                 <Link
-                  to={`/${props.username}`}
+                  to={`/event-go/hkhoa`}
                   _hover={{ textDecoration: 'none' }}
                 >
                   <MenuItem>
@@ -146,9 +146,11 @@ const Navbar = props => {
                   </MenuItem>
                 </Link>
                 <MenuDivider />
-                <MenuItem>
-                  <Text fontWeight="500">Sign Out</Text>
-                </MenuItem>
+                <Link to={'/event-go/login'}>
+                  <MenuItem>
+                    <Text fontWeight="500">Login</Text>
+                  </MenuItem>
+                </Link>
               </MenuList>
             </Menu>
           </HStack>
