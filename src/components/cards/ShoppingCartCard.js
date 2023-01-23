@@ -57,7 +57,7 @@ function ShoppingCartCard() {
             <Input
               {...input}
               size={{ base: 'sm', md: 'md' }}
-              w="25%"
+              w="35%"
               textAlign="center"
             />
             <Button {...dec} size={{ base: 'sm', md: 'md' }}>

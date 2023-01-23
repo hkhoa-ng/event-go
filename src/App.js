@@ -26,15 +26,12 @@ function App() {
   return (
     <ChakraProvider theme={myTheme}>
       <Routes>
-        <Route path="/event-go/" element={<Home name={name} />} />
-        <Route path="/event-go/shopping-cart" element={<Cart />} />
-        <Route path="/event-go/settings" element={<Settings />} />
-        <Route
-          path={`/event-go/${event.url}`}
-          element={<EventDetail {...event} />}
-        />
-        <Route path={`/event-go/${username}`} element={<Profile />} />
-        <Route path={`/event-go/login`} element={<Login />} />
+        <Route path="/" element={<Home name={name} />} />
+        <Route path="/shopping-cart" element={<Cart />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path={`/${event.url}`} element={<EventDetail {...event} />} />
+        <Route path={`/${username}`} element={<Profile />} />
+        <Route path={`/login`} element={<Login />} />
       </Routes>
     </ChakraProvider>
   );

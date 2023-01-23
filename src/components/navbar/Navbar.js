@@ -54,7 +54,7 @@ const Navbar = props => {
     >
       <Container minW="90%" px={4} mx="auto">
         <HStack>
-          <Link to={`/event-go/`} _hover={{ textDecoration: 'none' }}>
+          <Link to={`/`} _hover={{ textDecoration: 'none' }}>
             <Image
               alt="Event-Go logo"
               w={'auto'}
@@ -100,10 +100,7 @@ const Navbar = props => {
                 />
               </MenuButton>
               <MenuList zIndex={5} bg="brand.600">
-                <Link
-                  to={`/event-go/hkhoa`}
-                  _hover={{ textDecoration: 'none' }}
-                >
+                <Link to={`/hkhoa`} _hover={{ textDecoration: 'none' }}>
                   <MenuItem>
                     <VStack justify="start" alignItems="left">
                       <Text fontWeight="500">{props.name}</Text>
@@ -124,29 +121,23 @@ const Navbar = props => {
                   </MenuItem>
                 </Link>
                 <MenuDivider />
-                <Link to={`/event-go/`} _hover={{ textDecoration: 'none' }}>
+                <Link to={`/`} _hover={{ textDecoration: 'none' }}>
                   <MenuItem>
                     <Text fontWeight="500">Home</Text>
                   </MenuItem>
                 </Link>
-                <Link
-                  to={`/event-go/shopping-cart`}
-                  _hover={{ textDecoration: 'none' }}
-                >
+                <Link to={`/shopping-cart`} _hover={{ textDecoration: 'none' }}>
                   <MenuItem>
                     <Text fontWeight="500">Shopping Cart</Text>
                   </MenuItem>
                 </Link>
-                <Link
-                  to={`/event-go/settings`}
-                  _hover={{ textDecoration: 'none' }}
-                >
+                <Link to={`/settings`} _hover={{ textDecoration: 'none' }}>
                   <MenuItem>
                     <Text fontWeight="500">Settings</Text>
                   </MenuItem>
                 </Link>
                 <MenuDivider />
-                <Link to={'/event-go/login'}>
+                <Link to={'/login'}>
                   <MenuItem>
                     <Text fontWeight="500">Login</Text>
                   </MenuItem>

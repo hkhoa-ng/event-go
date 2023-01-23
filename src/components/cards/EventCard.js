@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 function EventCard() {
   const event = 'a-random-event';
   return (
-    <Link to={`/event-go/${event}`}>
+    <Link to={`/${event}`}>
       <VStack
         flexDir={{ base: 'row', md: 'column' }}
         p={5}
