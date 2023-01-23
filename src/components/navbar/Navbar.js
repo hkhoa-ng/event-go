@@ -14,31 +14,11 @@ import {
   MenuItem,
   Text,
   MenuDivider,
-  useColorModeValue,
-  Heading,
   InputGroup,
-  InputRightElement,
   InputLeftElement,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { ReactNode } from 'react';
 import { FaSearch, FaPrint, FaPlus } from 'react-icons/fa';
-import { AiOutlinePlus } from 'react-icons/ai';
-
-const IconButton = ({ children }) => {
-  return (
-    <Button
-      padding="0.4rem"
-      width="auto"
-      height="auto"
-      borderRadius="100%"
-      bg="transparent"
-      _hover={{ bg: '#f6f6f6' }}
-    >
-      {children}
-    </Button>
-  );
-};
 
 const Navbar = props => {
   return (
@@ -70,15 +50,6 @@ const Navbar = props => {
               borderRadius="5px"
             />
             <InputLeftElement children={<FaSearch />} />
-            {/* <Button
-                aria-label="Search button"
-                variant="solid"
-                fontWeight="medium"
-              >
-                Search
-              </Button> */}
-
-            {/* </InputLeftElement> */}
           </InputGroup>
           <Spacer />
           <HStack spacing={3}>
@@ -89,7 +60,9 @@ const Navbar = props => {
               _hover={{ bg: 'frenchPink.400' }}
               display={{ base: 'none', md: 'flex' }}
             >
-              Add event
+              <Link to={`/add`} _hover={{ textDecoration: 'none' }}>
+                Add event
+              </Link>
             </Button>
 
             <Menu isLazy>

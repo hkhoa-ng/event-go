@@ -43,7 +43,7 @@ function Home(props) {
   ];
   return (
     <Box>
-      {/* <Navbar username={'hkhoa'} name="Khoa Nguyen" /> */}
+      <Navbar username={'hkhoa'} name="Khoa Nguyen" />
       <Flex
         minW="90vw"
         minH="100vh"

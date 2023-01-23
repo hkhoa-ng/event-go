@@ -33,7 +33,7 @@ function EventDetail(props) {
   const event = 'a-random-event';
   console.log(props);
   return (
-    <Center>
+    <Center bg="gray.800">
       <VStack
         maxW={{ base: '100%', md: '90%', lg: '85%', xl: '80%' }}
         gap={0}
@@ -117,10 +117,10 @@ function EventDetail(props) {
           <Divider />
           <Tabs defaultIndex={1} minW="100%" isFitted pb={10}>
             <TabList>
-              <Tab>Details</Tab>
-              <Tab>Ticket</Tab>
-              <Tab>Organizer</Tab>
-              <Tab>Friends</Tab>
+              <Tab fontSize={{ base: '0.8rem', md: '1rem' }}>Details</Tab>
+              <Tab fontSize={{ base: '0.8rem', md: '1rem' }}>Ticket</Tab>
+              <Tab fontSize={{ base: '0.8rem', md: '1rem' }}>Organizer</Tab>
+              <Tab fontSize={{ base: '0.8rem', md: '1rem' }}>Friends</Tab>
             </TabList>
             <TabPanels>
               {/* Details */}
@@ -165,6 +165,7 @@ function EventDetail(props) {
                       min={0}
                       clampValueOnBlur={false}
                       maxW="20%"
+                      size={{ base: 'sm', md: 'md' }}
                     >
                       <NumberInputField />
                       <NumberInputStepper>
@@ -173,7 +174,7 @@ function EventDetail(props) {
                       </NumberInputStepper>
                     </NumberInput>
 
-                    <Button>Buy</Button>
+                    <Button size={{ base: 'sm', md: 'md' }}>Buy</Button>
                   </HStack>
                   <Text>
                     This ticket includes a free drink and a free snack.
@@ -193,6 +194,7 @@ function EventDetail(props) {
                       min={0}
                       clampValueOnBlur={false}
                       maxW="20%"
+                      size={{ base: 'sm', md: 'md' }}
                     >
                       <NumberInputField />
                       <NumberInputStepper>
@@ -201,7 +203,7 @@ function EventDetail(props) {
                       </NumberInputStepper>
                     </NumberInput>
 
-                    <Button>Buy</Button>
+                    <Button size={{ base: 'sm', md: 'md' }}>Buy</Button>
                   </HStack>
                   <Text>
                     Free ticket fee for children under 18 years old! Bring your

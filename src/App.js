@@ -10,6 +10,7 @@ import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import EventDetail from './pages/EventDetail';
 import Login from './pages/Login';
+import AddEvent from './pages/AddEvent';
 
 import Navbar from './components/navbar/Navbar';
 
@@ -32,6 +33,7 @@ function App() {
         <Route path={`/${event.url}`} element={<EventDetail {...event} />} />
         <Route path={`/${username}`} element={<Profile />} />
         <Route path={`/login`} element={<Login />} />
+        <Route path={`/add`} element={<AddEvent />} />
       </Routes>
     </ChakraProvider>
   );
