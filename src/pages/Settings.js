@@ -1,11 +1,12 @@
 import React from 'react';
-import { Box, Heading } from '@chakra-ui/react';
+import { Center } from '@chakra-ui/react';
+import Navbar from '../components/navbar/Navbar';
 
 function Settings() {
   return (
-    <Box w="100vw" h="100vh" bg="orange.100" pt={20}>
-      <Heading>Settings</Heading>
-    </Box>
+    <Center flexDir="column">
+      <Navbar username={'hkhoa'} name="Khoa Nguyen" />
+    </Center>
   );
 }
 
