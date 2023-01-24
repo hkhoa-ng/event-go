@@ -21,7 +21,7 @@ import Navbar from '../components/navbar/Navbar';
 
 function Profile() {
   return (
-    <Center flexDir="column" bg="gray.800">
+    <Center flexDir="column">
       <Navbar username={'hkhoa'} name="Khoa Nguyen" />
 
       {/* Avatar and background image */}

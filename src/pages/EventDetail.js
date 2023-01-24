@@ -33,7 +33,7 @@ function EventDetail(props) {
   const event = 'a-random-event';
   console.log(props);
   return (
-    <Center bg="gray.800">
+    <Center>
       <VStack
         maxW={{ base: '100%', md: '90%', lg: '85%', xl: '80%' }}
         gap={0}

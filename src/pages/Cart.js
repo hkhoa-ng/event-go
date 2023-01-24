@@ -19,7 +19,7 @@ import { HiOutlineMail } from 'react-icons/hi';
 
 function Cart() {
   return (
-    <Center flexDir="column" bg="gray.800">
+    <Center flexDir="column">
       <Navbar username={'hkhoa'} name="Khoa Nguyen" />
 
       <Stack

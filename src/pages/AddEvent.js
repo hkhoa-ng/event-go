@@ -33,7 +33,7 @@ function AddEvent() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Center flexDir="column" bg="gray.800" h={{ lg: '100vh' }}>
+    <Center flexDir="column">
       <Navbar username={'hkhoa'} name="Khoa Nguyen" />
       <Spacer />
       <Stack
@@ -195,7 +195,13 @@ function AddEvent() {
               >
                 Invite friend
               </Button>
-              <Modal isOpen={isOpen} onClose={onClose}>
+              <Modal
+                isOpen={isOpen}
+                onClose={onClose}
+                isCentered
+                motionPreset="slideInBottom"
+                size={{ base: 'xs', md: 'lg' }}
+              >
                 <ModalOverlay />
                 <ModalContent>
                   <ModalHeader>Friends</ModalHeader>
@@ -203,7 +209,7 @@ function AddEvent() {
                   <ModalBody>
                     <Box
                       overflowY="auto"
-                      maxH="30vh"
+                      maxH="50vh"
                       pr="15px"
                       sx={{
                         '::-webkit-scrollbar': {
