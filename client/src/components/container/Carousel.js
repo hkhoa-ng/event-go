@@ -13,6 +13,7 @@ import {
   IconButton,
   useBreakpointValue,
 } from '@chakra-ui/react';
+import { nanoid } from 'nanoid';
 
 import CarouselCard from './CarouselCard';
 import { FaLandmark, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
@@ -23,7 +24,12 @@ export default function Carousel(props) {
 
   const displayItems = props.events.map(e => {
     return (
-      <CarouselCard src={e.img} name={e.name} description={e.description} />
+      <CarouselCard
+        src={e.img}
+        name={e.name}
+        description={e.description}
+        key={nanoid()}
+      />
     );
   });
 

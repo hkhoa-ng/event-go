@@ -1,8 +1,7 @@
-import React from 'react';
-import { ChakraProvider, Box, VStack, Grid } from '@chakra-ui/react';
+import React, { useContext, useEffect } from 'react';
+import { ChakraProvider } from '@chakra-ui/react';
 import { Route, Routes } from 'react-router-dom';
 
-import { ColorModeSwitcher } from './ColorModeSwitcher';
 import myTheme from './styles/theme';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
@@ -12,7 +11,7 @@ import EventDetail from './pages/EventDetail';
 import Login from './pages/Login';
 import AddEvent from './pages/AddEvent';
 
-import Navbar from './components/navbar/Navbar';
+import EventContext from './context/EventContext';
 
 function App() {
   const username = 'hkhoa';
@@ -23,6 +22,12 @@ function App() {
     description: 'Some very random description',
     img: 'https://images.unsplash.com/photo-1549451371-64aa98a6f660?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
   };
+
+  const { getAllEvents } = useContext(EventContext);
+
+  useEffect(() => {
+    getAllEvents();
+  }, []);
 
   return (
     <ChakraProvider theme={myTheme}>
