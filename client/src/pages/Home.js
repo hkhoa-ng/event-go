@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Box,
   Container,
@@ -14,6 +14,8 @@ import Carousel from '../components/container/Carousel';
 import Categories from '../components/container/Categories';
 import EventContainer from '../components/container/EventContainer';
 import Navbar from '../components/navbar/Navbar';
+
+import EventContext from '../context/EventContext';
 
 function Home(props) {
   const imageUrl = [
@@ -41,6 +43,11 @@ function Home(props) {
       img: 'https://images.unsplash.com/photo-1433622070098-754fdf81c929?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
     },
   ];
+
+  const { allEvents } = useContext(EventContext);
+
+  console.log(allEvents);
+
   return (
     <Box>
       <Navbar username={'hkhoa'} name="Khoa Nguyen" />

@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom';
 function CarouselCard(props) {
   const event = 'a-random-event';
   return (
-    <LinkBox position="relative" maxH="50vh">
+    <LinkBox position="relative" maxH="50vh" key={props.key}>
       <Image minW="100%" src={props.src} />
       <Box
         position="absolute"
