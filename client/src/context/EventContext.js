@@ -17,45 +17,51 @@ export function EventProvider({ children }) {
     })
       .then(res => res.json())
       .then(data => {
-        // console.log(data);
         setAllEvents(
           data.events.map(event => {
             // Fetch the tags of current event
-            const tags = fetch(`${url}/events/tag`, {
+            const eventTags = [];
+            const eventTickets = [];
+            fetch(`${url}/event/tag?event_id=${event.event_id}`, {
               method: 'GET',
               headers: {
                 'x-api-key': 'yXBR9GfkSj2mfLIBqSfAL7gpJIiCiKrM1MMcNcgN',
               },
-              body: {
-                eventID: event.event_id,
-              },
             })
               .then(res => res.json())
-              .then(tags => tags)
+              .then(tags => {
+                tags.forEach(tag => {
+                  eventTags.push(tag);
+                });
+              })
               .catch(err =>
                 console.log(`Error while fetching tags of event: ${err}`)
               );
 
             // Fetch the ticket of current event
-            const tickets = fetch(`${url}/events/ticket`, {
-              method: 'GET',
-              headers: {
-                'x-api-key': 'yXBR9GfkSj2mfLIBqSfAL7gpJIiCiKrM1MMcNcgN',
-              },
-              body: {
-                eventID: event.event_id,
-              },
-            })
+            const tickets = fetch(
+              `${url}/event/ticket?event_id=${event.event_id}`,
+              {
+                method: 'GET',
+                headers: {
+                  'x-api-key': 'yXBR9GfkSj2mfLIBqSfAL7gpJIiCiKrM1MMcNcgN',
+                },
+              }
+            )
               .then(res => res.json())
-              .then(tags => tags)
+              .then(tickets => {
+                tickets.forEach(ticket => {
+                  eventTickets.push(ticket);
+                });
+              })
               .catch(err =>
                 console.log(`Error while fetching tickets of event: ${err}`)
               );
 
             const eventWithTagsAndTickets = {
               ...event,
-              tags: tags,
-              tickets: tickets,
+              tags: eventTags,
+              tickets: eventTickets,
             };
             return eventWithTagsAndTickets;
           })

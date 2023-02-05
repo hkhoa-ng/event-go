@@ -45,7 +45,7 @@ function EventDetail(props) {
         {/* Mobile image */}
         <Image
           w={{ base: '100%', md: '50%' }}
-          src={props.img}
+          src={props.image}
           _after={{ content: {} }}
           display={{ base: 'flex', md: 'none' }}
         />
@@ -72,7 +72,7 @@ function EventDetail(props) {
             {/* Medium and up image */}
             <Image
               w={{ base: '100%', md: '40%', xl: '45%' }}
-              src={props.img}
+              src={props.image}
               _after={{ content: {} }}
               display={{ base: 'none', md: 'flex' }}
               borderRadius="10px"
@@ -87,7 +87,7 @@ function EventDetail(props) {
                 fontWeight={'black'}
                 p={0}
               >
-                {props.name}
+                {props.event_name}
               </Heading>
               <HStack>
                 <Icon
@@ -99,7 +99,7 @@ function EventDetail(props) {
                   fontWeight="light"
                   p={0}
                 >
-                  Tampere University, 19:00 09.10.2022
+                  {props.location}, 19:00 09.10.2022
                 </Text>
               </HStack>
               <Button
@@ -125,8 +125,16 @@ function EventDetail(props) {
             <TabPanels>
               {/* Details */}
               <TabPanel>
-                <Heading fontSize="xl">The biggest event ever!</Heading>
+                <Heading fontSize="xl" pt={5}>
+                  The biggest event ever!
+                </Heading>
                 <Text fontSize="md" fontWeight="light">
+                  {props.descriptions[0]}.
+                </Text>
+                <Heading fontSize="xl" pt={5}>
+                  Random description!
+                </Heading>
+                <Text fontSize="md" fontWeight="light" p={0}>
                   Nulla tempor aliqua deserunt in eu amet ullamco ea adipisicing
                   dolore commodo. Ullamco sunt mollit cillum esse est Lorem
                   officia enim aliqua in aute pariatur aliquip enim. Non enim
@@ -134,18 +142,6 @@ function EventDetail(props) {
                   incididunt consequat do nulla excepteur eiusmod et voluptate
                   nostrud dolor esse et consectetur eiusmod. Ex duis eu ipsum
                   consectetur ea nulla in.
-                </Text>
-                <Heading fontSize="xl" pt={10}>
-                  Get to know your friends!
-                </Heading>
-                <Text fontSize="md" fontWeight="light" p={0}>
-                  {props.description}. Nulla tempor aliqua deserunt in eu amet
-                  ullamco ea adipisicing dolore commodo. Ullamco sunt mollit
-                  cillum esse est Lorem officia enim aliqua in aute pariatur
-                  aliquip enim. Non enim cillum qui adipisicing consectetur
-                  adipisicing in. Cillum incididunt consequat do nulla excepteur
-                  eiusmod et voluptate nostrud dolor esse et consectetur
-                  eiusmod. Ex duis eu ipsum consectetur ea nulla in.
                 </Text>
               </TabPanel>
 
@@ -213,7 +209,12 @@ function EventDetail(props) {
               </TabPanel>
 
               {/* Organizer */}
-              <TabPanel></TabPanel>
+              <TabPanel>
+                <Heading fontSize="xl" pt={5}>
+                  Oranizer email
+                </Heading>
+                <Text>{props.organizer_email}</Text>
+              </TabPanel>
             </TabPanels>
           </Tabs>
         </Box>

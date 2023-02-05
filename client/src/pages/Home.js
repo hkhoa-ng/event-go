@@ -46,7 +46,7 @@ function Home(props) {
 
   const { allEvents } = useContext(EventContext);
 
-  console.log(allEvents);
+  console.log('Logging from Home: ' + allEvents);
 
   return (
     <Box>
@@ -75,7 +75,7 @@ function Home(props) {
           mt={{ base: '4rem', md: '0' }}
           bg="gray.800"
         >
-          <Carousel events={events} />
+          <Carousel events={allEvents} />
           <EventContainer type="Popular" />
           <EventContainer type="Near you" />
           <EventContainer type="Popular with friends" />

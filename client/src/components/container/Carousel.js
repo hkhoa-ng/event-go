@@ -25,9 +25,10 @@ export default function Carousel(props) {
   const displayItems = props.events.map(e => {
     return (
       <CarouselCard
-        src={e.img}
-        name={e.name}
-        description={e.description}
+        src={e.image}
+        name={e.event_name}
+        description={e.descriptions[0]}
+        id={e.event_id}
         key={nanoid()}
       />
     );

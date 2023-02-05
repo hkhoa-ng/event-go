@@ -42,7 +42,7 @@ function CarouselCard(props) {
             </Text>
           </VStack>
           <Box>
-            <Link to={`/${event}`} bg="teal">
+            <Link to={`/${props.id}`} bg="teal">
               <IconButton
                 icon={<FiMoreHorizontal />}
                 borderRadius="50%"
