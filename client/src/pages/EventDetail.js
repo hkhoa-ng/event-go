@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  LinkBox,
   Image,
   Box,
   HStack,
@@ -23,15 +22,13 @@ import {
   Spacer,
   Icon,
   Center,
-  Flex,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { FiMoreHorizontal, FiHeart } from 'react-icons/fi';
 import { MdLocationOn } from 'react-icons/md';
+import { nanoid } from 'nanoid';
 
 function EventDetail(props) {
-  const event = 'a-random-event';
-  console.log(props);
   return (
     <Center>
       <VStack
@@ -49,7 +46,7 @@ function EventDetail(props) {
           _after={{ content: {} }}
           display={{ base: 'flex', md: 'none' }}
         />
-        <Box position="relative" maxW="80%" mt="0">
+        <Box position="relative" maxW="80%" mt="0" w="90%">
           {/* Mobile button */}
           <IconButton
             position="absolute"
@@ -115,8 +112,8 @@ function EventDetail(props) {
 
           {/* Information section */}
           <Divider />
-          <Tabs defaultIndex={1} minW="100%" isFitted pb={10}>
-            <TabList>
+          <Tabs defaultIndex={0} minW="100%" isFitted pb={10}>
+            <TabList justifyContent="stretch">
               <Tab fontSize={{ base: '0.8rem', md: '1rem' }}>Details</Tab>
               <Tab fontSize={{ base: '0.8rem', md: '1rem' }}>Ticket</Tab>
               <Tab fontSize={{ base: '0.8rem', md: '1rem' }}>Organizer</Tab>
@@ -125,87 +122,72 @@ function EventDetail(props) {
             <TabPanels>
               {/* Details */}
               <TabPanel>
-                <Heading fontSize="xl" pt={5}>
-                  The biggest event ever!
-                </Heading>
-                <Text fontSize="md" fontWeight="light">
-                  {props.descriptions[0]}.
-                </Text>
-                <Heading fontSize="xl" pt={5}>
-                  Random description!
-                </Heading>
-                <Text fontSize="md" fontWeight="light" p={0}>
-                  Nulla tempor aliqua deserunt in eu amet ullamco ea adipisicing
-                  dolore commodo. Ullamco sunt mollit cillum esse est Lorem
-                  officia enim aliqua in aute pariatur aliquip enim. Non enim
-                  cillum qui adipisicing consectetur adipisicing in. Cillum
-                  incididunt consequat do nulla excepteur eiusmod et voluptate
-                  nostrud dolor esse et consectetur eiusmod. Ex duis eu ipsum
-                  consectetur ea nulla in.
-                </Text>
+                {Array.isArray(props.descriptions) ? (
+                  props.descriptions.map(des => (
+                    <Text
+                      key={nanoid()}
+                      fontSize="md"
+                      fontWeight="light"
+                      mb={5}
+                    >
+                      {des}
+                    </Text>
+                  ))
+                ) : (
+                  <Text fontSize="md" fontWeight="light">
+                    This event has no description.
+                  </Text>
+                )}
               </TabPanel>
 
               {/* Tickets */}
               <TabPanel>
-                <VStack align="left" gap={2}>
-                  <HStack gap={0}>
-                    <Text>
-                      <b>Adults,</b> 15 euros
-                    </Text>
-                    <Spacer />
+                {/* <VStack align="left" gap={2}> */}
+                {Array.isArray(props.tickets) ? (
+                  <VStack w="100%" gap="15px" mt="20px">
+                    {props.tickets.map(ticket => {
+                      return (
+                        <VStack
+                          key={nanoid()}
+                          w="100%"
+                          alignItems="space-between"
+                        >
+                          <HStack gap={0}>
+                            <Text>
+                              <b>{ticket.ticket_type},</b> {ticket.price} euros
+                            </Text>
+                            <Spacer />
 
-                    {/* Ticket number selector */}
-                    <NumberInput
-                      defaultValue={0}
-                      max={5}
-                      min={0}
-                      clampValueOnBlur={false}
-                      maxW="20%"
-                      size={{ base: 'sm', md: 'md' }}
-                    >
-                      <NumberInputField />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
+                            {/* Ticket number selector */}
+                            <NumberInput
+                              defaultValue={0}
+                              max={5}
+                              min={0}
+                              clampValueOnBlur={false}
+                              maxW="20%"
+                              size={{ base: 'sm', md: 'md' }}
+                            >
+                              <NumberInputField />
+                              <NumberInputStepper>
+                                <NumberIncrementStepper />
+                                <NumberDecrementStepper />
+                              </NumberInputStepper>
+                            </NumberInput>
 
-                    <Button size={{ base: 'sm', md: 'md' }}>Buy</Button>
-                  </HStack>
-                  <Text>
-                    This ticket includes a free drink and a free snack.
-                    Guarantee fun!
+                            <Button size={{ base: 'sm', md: 'md' }}>Buy</Button>
+                          </HStack>
+                          <Text>{ticket.description}</Text>
+                          <Divider />
+                        </VStack>
+                      );
+                    })}
+                  </VStack>
+                ) : (
+                  <Text fontSize="md" fontWeight="light">
+                    This event has no ticket.
                   </Text>
-
-                  <HStack gap={0} pt={5}>
-                    <Text>
-                      <b>Children under 18,</b> free
-                    </Text>
-                    <Spacer />
-
-                    {/* Ticket number selector */}
-                    <NumberInput
-                      defaultValue={0}
-                      max={5}
-                      min={0}
-                      clampValueOnBlur={false}
-                      maxW="20%"
-                      size={{ base: 'sm', md: 'md' }}
-                    >
-                      <NumberInputField />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
-
-                    <Button size={{ base: 'sm', md: 'md' }}>Buy</Button>
-                  </HStack>
-                  <Text>
-                    Free ticket fee for children under 18 years old! Bring your
-                    kids along!
-                  </Text>
-                </VStack>
+                )}
+                {/* </VStack> */}
               </TabPanel>
 
               {/* Organizer */}

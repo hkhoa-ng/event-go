@@ -1,73 +1,85 @@
 import { createContext, useState } from 'react';
+import axios from 'axios';
 
 const EventContext = createContext();
 
 export function EventProvider({ children }) {
   const [allEvents, setAllEvents] = useState();
+  const [availableTags, setAvailableTags] = useState();
   const url =
     'https://khoa-nguyen-cors-anywhere.fly.dev/https://a1fzt90jn3.execute-api.eu-central-1.amazonaws.com/production';
+  // 'https://a1fzt90jn3.execute-api.eu-central-1.amazonaws.com/production';
+  const xApiKey = 'DUBwlix96T5zt3M7tOnJ7ilJt6ufVG1436lyXzXh';
+  const config = {
+    headers: {
+      'x-api-key': xApiKey,
+      'Content-Type': 'application/json',
+    },
+  };
 
+  // Attempt to get all events with their tickets and tags
   const getAllEvents = () => {
-    // TODO: fetch from API
-    fetch(`${url}/events`, {
-      method: 'GET',
-      headers: {
-        'x-api-key': 'yXBR9GfkSj2mfLIBqSfAL7gpJIiCiKrM1MMcNcgN',
-      },
-    })
-      .then(res => res.json())
-      .then(data => {
+    // Get all events (excluding tags and tickets)
+    axios
+      .get(`${url}/events`, config)
+      .then(res => {
         setAllEvents(
-          data.events.map(event => {
-            // Fetch the tags of current event
-            const eventTags = [];
-            const eventTickets = [];
-            fetch(`${url}/event/tag?event_id=${event.event_id}`, {
-              method: 'GET',
-              headers: {
-                'x-api-key': 'yXBR9GfkSj2mfLIBqSfAL7gpJIiCiKrM1MMcNcgN',
-              },
-            })
-              .then(res => res.json())
-              .then(tags => {
-                tags.forEach(tag => {
-                  eventTags.push(tag);
-                });
-              })
-              .catch(err =>
-                console.log(`Error while fetching tags of event: ${err}`)
-              );
+          res.data.events.map(event => {
+            const currTags = [];
+            const currTickets = [];
 
-            // Fetch the ticket of current event
-            const tickets = fetch(
-              `${url}/event/ticket?event_id=${event.event_id}`,
-              {
-                method: 'GET',
-                headers: {
-                  'x-api-key': 'yXBR9GfkSj2mfLIBqSfAL7gpJIiCiKrM1MMcNcgN',
-                },
-              }
-            )
-              .then(res => res.json())
-              .then(tickets => {
-                tickets.forEach(ticket => {
-                  eventTickets.push(ticket);
-                });
+            // Get tags of events
+            axios
+              .get(`${url}/event/tag?event_id=${event.event_id}`, config)
+              .then(res => {
+                if (Array.isArray(res.data)) {
+                  currTags.push(...res.data);
+                }
               })
-              .catch(err =>
-                console.log(`Error while fetching tickets of event: ${err}`)
-              );
+              .catch(err => {
+                console.error(
+                  `Error when getting tags at ID = ${event.event_id}: ${err}`
+                );
+              });
+
+            // Get tickets of events
+            axios
+              .get(`${url}/event/ticket?event_id=${event.event_id}`, config)
+              .then(res => {
+                if (Array.isArray(res.data)) {
+                  currTickets.push(...res.data);
+                }
+              })
+              .catch(err => {
+                console.error(
+                  `Error when getting tickets at ID = ${event.event_id}: ${err}`
+                );
+              });
 
             const eventWithTagsAndTickets = {
               ...event,
-              tags: eventTags,
-              tickets: eventTickets,
+              tags: currTags,
+              tickets: currTickets,
             };
             return eventWithTagsAndTickets;
           })
         );
       })
-      .catch(err => console.log(`Error while fetching all event data: ${err}`));
+      .catch(err => {
+        console.error(`Error when attempt to get all events: ${err}`);
+      });
+  };
+
+  // Attempt to get all available tags
+  const getAvailableTags = () => {
+    axios
+      .get(`${url}/available-tags`, config)
+      .then(res => {
+        setAvailableTags(res.data);
+      })
+      .catch(err => {
+        console.error(`Error while getting available tags: ${err}`);
+      });
   };
 
   const getEventInfo = () => {
@@ -75,7 +87,9 @@ export function EventProvider({ children }) {
   };
 
   return (
-    <EventContext.Provider value={{ allEvents, getAllEvents, url }}>
+    <EventContext.Provider
+      value={{ allEvents, getAllEvents, getAvailableTags, availableTags, url }}
+    >
       {children}
     </EventContext.Provider>
   );

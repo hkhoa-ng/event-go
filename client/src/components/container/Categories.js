@@ -20,8 +20,9 @@ import {
 } from '@chakra-ui/react';
 import { FaHome } from 'react-icons/fa';
 import { FiMoreHorizontal } from 'react-icons/fi';
+import { nanoid } from 'nanoid';
 
-function Categories() {
+function Categories(props) {
   return (
     <Flex
       flexDir={{ base: 'row', md: 'column' }}
@@ -51,77 +52,22 @@ function Categories() {
       >
         All events
       </Button>
-      <Button
-        colorScheme="brand"
-        variant="ghost"
-        leftIcon={<FaHome />}
-        justifyContent="flex-start"
-      >
-        Popular events
-      </Button>
-      <Button
-        display={{ base: 'none', md: 'flex' }}
-        colorScheme="brand"
-        variant="ghost"
-        leftIcon={<FaHome />}
-        justifyContent="flex-start"
-      >
-        Near me
-      </Button>
-      <Button
-        display={{ base: 'none', md: 'flex' }}
-        colorScheme="brand"
-        variant="ghost"
-        leftIcon={<FaHome />}
-        justifyContent="flex-start"
-      >
-        Popular with friends
-      </Button>
-      <Button
-        display={{ base: 'none', md: 'flex' }}
-        colorScheme="brand"
-        variant="ghost"
-        leftIcon={<FaHome />}
-        justifyContent="flex-start"
-      >
-        Night time
-      </Button>
-      <Button
-        display={{ base: 'none', md: 'flex' }}
-        colorScheme="brand"
-        variant="ghost"
-        leftIcon={<FaHome />}
-        justifyContent="flex-start"
-      >
-        Sports
-      </Button>
-      <Button
-        display={{ base: 'none', md: 'flex' }}
-        colorScheme="brand"
-        variant="ghost"
-        leftIcon={<FaHome />}
-        justifyContent="flex-start"
-      >
-        Musical
-      </Button>
-      <Button
-        display={{ base: 'none', md: 'flex' }}
-        colorScheme="brand"
-        variant="ghost"
-        leftIcon={<FaHome />}
-        justifyContent="flex-start"
-      >
-        Academic
-      </Button>
-      <Button
-        display={{ base: 'none', md: 'flex' }}
-        colorScheme="brand"
-        variant="ghost"
-        leftIcon={<FaHome />}
-        justifyContent="flex-start"
-      >
-        Courses
-      </Button>
+
+      {props.tags.map(tag => {
+        return (
+          <Button
+            key={nanoid()}
+            display={{ base: 'none', md: 'flex' }}
+            colorScheme="brand"
+            variant="ghost"
+            leftIcon={<FaHome />}
+            justifyContent="flex-start"
+          >
+            {tag}
+          </Button>
+        );
+      })}
+
       <Popover>
         <PopoverTrigger>
           <IconButton

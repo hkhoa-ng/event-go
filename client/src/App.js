@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, Suspense } from 'react';
-import { ChakraProvider } from '@chakra-ui/react';
+import { Center, ChakraProvider } from '@chakra-ui/react';
 import { Route, Routes } from 'react-router-dom';
+import HashLoader from 'react-spinners/HashLoader';
+import { nanoid } from 'nanoid';
 
 import myTheme from './styles/theme';
 import EventContext from './context/EventContext';
@@ -16,22 +18,29 @@ const LazyLoadedAddEvent = React.lazy(() => import('./pages/AddEvent'));
 function App() {
   const username = 'hkhoa';
   const name = 'Khoa Nguyen';
-  const event = {
-    name: 'Random event with a very long long long name',
-    url: 'a-random-event',
-    description: 'Some very random description',
-    img: 'https://images.unsplash.com/photo-1549451371-64aa98a6f660?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
-  };
 
-  const { getAllEvents, allEvents } = useContext(EventContext);
+  const { getAllEvents, allEvents, getAvailableTags } =
+    useContext(EventContext);
 
   useEffect(() => {
     getAllEvents();
+    getAvailableTags();
   }, []);
 
   return (
     <ChakraProvider theme={myTheme}>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <Center h="100vh">
+            <HashLoader
+              size={150}
+              color="#28a99e"
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </Center>
+        }
+      >
         {allEvents ? (
           <Routes>
             <Route path="/" element={<LazyLoadedHome name={name} />} />
@@ -39,6 +48,7 @@ function App() {
             <Route path="/settings" element={<LazyLoadedSettings />} />
             {allEvents.map(e => (
               <Route
+                key={nanoid()}
                 path={`/${e.event_id}`}
                 element={<LazyLoadedEventDetail {...e} />}
               />
@@ -48,7 +58,14 @@ function App() {
             <Route path={`/add`} element={<LazyLoadedAddEvent />} />
           </Routes>
         ) : (
-          <div>Loading...</div>
+          <Center h="100vh">
+            <HashLoader
+              size={150}
+              color="#28a99e"
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </Center>
         )}
       </Suspense>
     </ChakraProvider>
