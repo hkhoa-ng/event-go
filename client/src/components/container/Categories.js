@@ -63,7 +63,7 @@ function Categories(props) {
             leftIcon={<FaHome />}
             justifyContent="flex-start"
           >
-            {tag}
+            {tag.replace(/^\w/, c => c.toUpperCase())}
           </Button>
         );
       })}
@@ -82,55 +82,18 @@ function Categories(props) {
             <PopoverCloseButton />
             <PopoverBody>
               <Wrap pl="5px" py="10px">
-                <Button
-                  colorScheme="gray"
-                  variant="solid"
-                  leftIcon={<FaHome />}
-                >
-                  Near me
-                </Button>
-                <Button
-                  colorScheme="gray"
-                  variant="solid"
-                  leftIcon={<FaHome />}
-                >
-                  Popular with friends
-                </Button>
-                <Button
-                  colorScheme="gray"
-                  variant="solid"
-                  leftIcon={<FaHome />}
-                >
-                  Night time
-                </Button>
-                <Button
-                  colorScheme="gray"
-                  variant="solid"
-                  leftIcon={<FaHome />}
-                >
-                  Sports
-                </Button>
-                <Button
-                  colorScheme="gray"
-                  variant="solid"
-                  leftIcon={<FaHome />}
-                >
-                  Musical
-                </Button>
-                <Button
-                  colorScheme="gray"
-                  variant="solid"
-                  leftIcon={<FaHome />}
-                >
-                  Academic
-                </Button>
-                <Button
-                  colorScheme="gray"
-                  variant="solid"
-                  leftIcon={<FaHome />}
-                >
-                  Courses
-                </Button>
+                {props.tags.map(tag => {
+                  return (
+                    <Button
+                      key={nanoid()}
+                      colorScheme="gray"
+                      variant="solid"
+                      leftIcon={<FaHome />}
+                    >
+                      {tag.replace(/^\w/, c => c.toUpperCase())}
+                    </Button>
+                  );
+                })}
               </Wrap>
             </PopoverBody>
           </PopoverContent>

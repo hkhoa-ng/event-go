@@ -27,7 +27,11 @@ export default function Carousel(props) {
       <CarouselCard
         src={e.image}
         name={e.event_name}
-        description={e.descriptions[0]}
+        description={
+          e.descriptions === null
+            ? "This event doesn't have a description."
+            : e.descriptions[0]
+        }
         id={e.event_id}
         key={nanoid()}
       />

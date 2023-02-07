@@ -122,7 +122,7 @@ function EventDetail(props) {
             <TabPanels>
               {/* Details */}
               <TabPanel>
-                {Array.isArray(props.descriptions) ? (
+                {props.descriptions !== null ? (
                   props.descriptions.map(des => (
                     <Text
                       key={nanoid()}
@@ -143,9 +143,10 @@ function EventDetail(props) {
               {/* Tickets */}
               <TabPanel>
                 {/* <VStack align="left" gap={2}> */}
-                {Array.isArray(props.tickets) ? (
+                {props.tickets.length > 0 ? (
                   <VStack w="100%" gap="15px" mt="20px">
                     {props.tickets.map(ticket => {
+                      console.log(ticket);
                       return (
                         <VStack
                           key={nanoid()}

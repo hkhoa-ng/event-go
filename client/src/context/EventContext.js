@@ -6,6 +6,7 @@ const EventContext = createContext();
 export function EventProvider({ children }) {
   const [allEvents, setAllEvents] = useState();
   const [availableTags, setAvailableTags] = useState();
+
   const url =
     'https://khoa-nguyen-cors-anywhere.fly.dev/https://a1fzt90jn3.execute-api.eu-central-1.amazonaws.com/production';
   // 'https://a1fzt90jn3.execute-api.eu-central-1.amazonaws.com/production';
@@ -82,13 +83,30 @@ export function EventProvider({ children }) {
       });
   };
 
+  // Get all events of a tag
+  const getEventsByTag = async tag => {
+    try {
+      const res = await axios.get(`${url}/tag-events?tag_name=${tag}`, config);
+      return res.data;
+    } catch (err) {
+      console.error(`Error when getting events of tag ${tag}: ${err}`);
+    }
+  };
+
   const getEventInfo = () => {
     // TODO: get full event information based on ID
   };
 
   return (
     <EventContext.Provider
-      value={{ allEvents, getAllEvents, getAvailableTags, availableTags, url }}
+      value={{
+        allEvents,
+        getAllEvents,
+        getAvailableTags,
+        availableTags,
+        url,
+        getEventsByTag,
+      }}
     >
       {children}
     </EventContext.Provider>

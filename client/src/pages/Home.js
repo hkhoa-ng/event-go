@@ -1,13 +1,5 @@
-import React, { useContext } from 'react';
-import {
-  Box,
-  Container,
-  Heading,
-  IconButton,
-  Text,
-  Flex,
-  Divider,
-} from '@chakra-ui/react';
+import React, { useContext, useEffect } from 'react';
+import { Box, Container, Flex, Divider } from '@chakra-ui/react';
 import { FaPlus } from 'react-icons/fa';
 
 import Carousel from '../components/container/Carousel';
@@ -16,6 +8,7 @@ import EventContainer from '../components/container/EventContainer';
 import Navbar from '../components/navbar/Navbar';
 
 import EventContext from '../context/EventContext';
+import { nanoid } from 'nanoid';
 
 function Home(props) {
   const { allEvents, availableTags } = useContext(EventContext);
@@ -48,9 +41,9 @@ function Home(props) {
           bg="gray.800"
         >
           <Carousel events={allEvents} />
-          <EventContainer type="Popular" />
-          <EventContainer type="Near you" />
-          <EventContainer type="Popular with friends" />
+          {availableTags.map(tag => {
+            return <EventContainer type={tag} key={nanoid()} />;
+          })}
         </Container>
       </Flex>
     </Box>
