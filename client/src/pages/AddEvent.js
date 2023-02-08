@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import Navbar from '../components/navbar/Navbar';
 import {
   Center,
@@ -24,13 +24,18 @@ import {
   useDisclosure,
   IconButton,
   Radio,
+  Select,
 } from '@chakra-ui/react';
 import { BsPersonPlusFill } from 'react-icons/bs';
 import FriendCard from '../components/cards/FriendCard';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import EventContext from '../context/EventContext';
+import ChipInput from '../components/inputs/ChipInput';
 
 function AddEvent() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { availableTags } = useContext(EventContext);
+  const [newEventTags, setNewEventTags] = useState([]);
 
   return (
     <Center flexDir="column">
@@ -98,6 +103,14 @@ function AddEvent() {
                 type="text"
                 placeholder="Location of the event"
                 variant="flushed"
+              />
+              <Text fontWeight="semibold" pt="15px">
+                Event Tags
+              </Text>
+              <ChipInput
+                availableTags={availableTags}
+                selectedTags={newEventTags}
+                setSelectedTags={setNewEventTags}
               />
             </VStack>
             <Divider orientation="vertical" />

@@ -1,18 +1,11 @@
 import React from 'react';
-import {
-  Box,
-  Heading,
-  Text,
-  Badge,
-  Image,
-  VStack,
-  LinkBox,
-  Flex,
-} from '@chakra-ui/react';
+import { Heading, Text, Badge, Image, VStack, Flex } from '@chakra-ui/react';
+import { nanoid } from 'nanoid';
 import { Link } from 'react-router-dom';
 
 function EventCard(props) {
-  console.table(props.event);
+  // console.table(props.event);
+  // console.log(`Tags of ${props.event.event_name} are: ${props.event.tags}`);
   const date = new Date(props.event.event_time);
   const formattedDate = date
     .toLocaleDateString('en-GB', {
@@ -45,9 +38,9 @@ function EventCard(props) {
           >
             {props.event.event_name}
           </Heading>
-          <Flex gap="5px">
+          <Flex gap="5px" flexWrap="wrap">
             {props.event.tags.map(tag => (
-              <Badge variant="solid" colorScheme="telegram">
+              <Badge variant="solid" colorScheme="telegram" key={nanoid()}>
                 {tag}
               </Badge>
             ))}
