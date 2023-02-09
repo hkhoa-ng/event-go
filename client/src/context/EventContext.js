@@ -19,56 +19,6 @@ export function EventProvider({ children }) {
   };
 
   // Attempt to get all events with their tickets and tags
-  // const getAllEvents = () => {
-  //   // Get all events (excluding tags and tickets)
-  //   axios
-  //     .get(`${url}/events`, config)
-  //     .then(res => {
-  //       const all = res.data.events.map(event => {
-  //         const currTags = [];
-  //         const currTickets = [];
-
-  //         // Get tags of events
-  //         axios
-  //           .get(`${url}/event/tag?event_id=${event.event_id}`, config)
-  //           .then(res => {
-  //             if (Array.isArray(res.data)) {
-  //               currTags.push(...res.data);
-  //             }
-  //           })
-  //           .catch(err => {
-  //             console.error(
-  //               `Error when getting tags at ID = ${event.event_id}: ${err}`
-  //             );
-  //           });
-
-  //         // Get tickets of events
-  //         axios
-  //           .get(`${url}/event/ticket?event_id=${event.event_id}`, config)
-  //           .then(res => {
-  //             if (Array.isArray(res.data)) {
-  //               currTickets.push(...res.data);
-  //             }
-  //           })
-  //           .catch(err => {
-  //             console.error(
-  //               `Error when getting tickets at ID = ${event.event_id}: ${err}`
-  //             );
-  //           });
-
-  //         const eventWithTagsAndTickets = {
-  //           ...event,
-  //           tags: currTags,
-  //           tickets: currTickets,
-  //         };
-  //         return eventWithTagsAndTickets;
-  //       });
-  //       setAllEvents(all);
-  //     })
-  //     .catch(err => {
-  //       console.error(`Error when attempt to get all events: ${err}`);
-  //     });
-  // };
   const getAllEvents = async () => {
     try {
       // Get all events (excluding tags and tickets)
@@ -142,10 +92,6 @@ export function EventProvider({ children }) {
     } catch (err) {
       console.error(`Error when getting events of tag ${tag}: ${err}`);
     }
-  };
-
-  const getEventInfo = () => {
-    // TODO: get full event information based on ID
   };
 
   return (

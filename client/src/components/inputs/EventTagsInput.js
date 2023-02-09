@@ -16,7 +16,7 @@ const Chip = ({ label, onDelete }) => {
     <Badge
       as="span"
       display="inline-flex"
-      colorScheme="telegram"
+      bg="telegram.700"
       alignItems="center"
       pl="3"
       py="1px"
@@ -35,7 +35,7 @@ const Chip = ({ label, onDelete }) => {
   );
 };
 
-const ChipInput = ({ availableTags, selectedTags, setSelectedTags }) => {
+const EventTagsInput = ({ availableTags, selectedTags, setSelectedTags }) => {
   const handleTagSelection = tag => {
     if (!selectedTags.includes(tag)) {
       setSelectedTags([...selectedTags, tag]);
@@ -47,7 +47,7 @@ const ChipInput = ({ availableTags, selectedTags, setSelectedTags }) => {
   };
 
   return (
-    <Stack spacing="2">
+    <Stack spacing="2" mt="5">
       <Stack direction="row">
         <Menu>
           <MenuButton
@@ -56,10 +56,11 @@ const ChipInput = ({ availableTags, selectedTags, setSelectedTags }) => {
             transition="all 0.2s"
             borderRadius="md"
             borderWidth="1px"
-            _hover={{ bg: 'gray.400' }}
+            _hover={{ bg: 'gray.600' }}
             _expanded={{ bg: 'blue.400' }}
+            fontWeight="bold"
           >
-            Select tags
+            Select event tags
           </MenuButton>
           <MenuList>
             {availableTags.map(tag => {
@@ -89,4 +90,4 @@ const ChipInput = ({ availableTags, selectedTags, setSelectedTags }) => {
   );
 };
 
-export default ChipInput;
+export default EventTagsInput;

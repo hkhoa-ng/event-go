@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Center,
   Heading,
@@ -16,9 +16,19 @@ import {
 import Navbar from '../components/navbar/Navbar';
 import ShoppingCartCard from '../components/cards/ShoppingCartCard';
 import { HiOutlineMail } from 'react-icons/hi';
-import StripeCheckoutButton from '../components/stripeCheckoutButton/stripeCheckoutButton'
+import StripeCheckoutButton from '../components/stripeCheckoutButton/stripeCheckoutButton';
+import ShoppingCartContext from '../context/ShoppingCartContext';
+import { nanoid } from 'nanoid';
+
 function Cart() {
-  const [total, setTotal] = useState(0)
+  const { shoppingCartTickets, getTotalPrice } =
+    useContext(ShoppingCartContext);
+  const [total, setTotal] = useState(getTotalPrice());
+
+  useEffect(() => {
+    setTotal(getTotalPrice());
+  }, [shoppingCartTickets]);
+
   return (
     <Center flexDir="column">
       <Navbar username={'hkhoa'} name="Khoa Nguyen" />
@@ -56,14 +66,23 @@ function Cart() {
               // },
             }}
           >
-            <ShoppingCartCard />
-            <ShoppingCartCard />
-            <ShoppingCartCard />
-            <ShoppingCartCard />
-            <ShoppingCartCard />
-            <ShoppingCartCard />
-            <ShoppingCartCard />
-            <ShoppingCartCard />
+            {shoppingCartTickets.length > 0 ? (
+              shoppingCartTickets.map(ticket => {
+                return (
+                  <ShoppingCartCard
+                    key={nanoid()}
+                    eventName={ticket.eventName}
+                    ticketType={ticket.ticketType}
+                    image={ticket.image}
+                    eventId={ticket.eventId}
+                    price={ticket.price}
+                    quantity={ticket.quantity}
+                  />
+                );
+              })
+            ) : (
+              <Text>Your cart is empty!</Text>
+            )}
           </Stack>
 
           <Divider />
@@ -98,9 +117,9 @@ function Cart() {
               <Input type="text" placeholder="Promotion code" />
               <Button>Apply</Button>
             </HStack>
-            <Text fontWeight="light" color="gray.400">
+            {/* <Text fontWeight="light" color="gray.400">
               20% discount
-            </Text>
+            </Text> */}
             <Divider pt="10px" />
           </VStack>
 
@@ -118,7 +137,7 @@ function Cart() {
                 fontSize={{ base: '1.2rem', md: '1.5rem' }}
                 textAlign="right"
               >
-                $39.98
+                ${total.toFixed(2)}
               </Text>
             </HStack>
             {/* Discount */}
@@ -127,7 +146,7 @@ function Cart() {
                 Discount
               </Text>
               <Text fontWeight="light" textAlign="right">
-                (-20%) - $7.89
+                {/* (-20%) - $7.89 */}- $0.00
               </Text>
             </HStack>
             {/* Delivery */}
@@ -145,7 +164,7 @@ function Cart() {
                 Tax
               </Text>
               <Text fontWeight="light" textAlign="right">
-                + $8.00
+                + $0.00
               </Text>
             </HStack>
             <Divider pt="10px" />
@@ -165,16 +184,15 @@ function Cart() {
                 fontSize={{ base: '1.2rem', md: '1.5rem' }}
                 textAlign="right"
               >
-                $40.17
+                ${total.toFixed(2)}
               </Text>
             </HStack>
           </VStack>
-          <div className="total">TOTAL: ${total}</div>
           <div className="test-warning">
-              *Please use the following test credit card for payments* <br />
-              4242 4242 4242 4242 - Exp: 01/50 - CVV: 123
+            *Please use the following test credit card for payments* <br />
+            4242 4242 4242 4242 - Exp: 01/50 - CVV: 123
           </div>
-          <StripeCheckoutButton price = {total} />
+          <StripeCheckoutButton price={total} />
           {/* <Button colorScheme="messenger">Proceed to checkout</Button> */}
           <Button>Continue shopping</Button>
         </Stack>

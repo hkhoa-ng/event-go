@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { Box, Container, Flex, Divider } from '@chakra-ui/react';
-import { FaPlus } from 'react-icons/fa';
+import React, { useContext } from 'react';
+import { Box, Container, Flex } from '@chakra-ui/react';
 
 import Carousel from '../components/container/Carousel';
 import Categories from '../components/container/Categories';

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Image,
   Box,
@@ -13,24 +13,20 @@ import {
   Tab,
   TabPanel,
   TabPanels,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
   Button,
-  Spacer,
   Icon,
   Center,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
-import { FiMoreHorizontal, FiHeart } from 'react-icons/fi';
+import { FiHeart } from 'react-icons/fi';
 import { MdLocationOn } from 'react-icons/md';
 import { nanoid } from 'nanoid';
+import BuyTicketInput from '../components/inputs/BuyTicketInput';
+import Navbar from '../components/navbar/Navbar';
 
 function EventDetail(props) {
   return (
     <Center>
+      <Navbar username={'hkhoa'} name="Khoa Nguyen" />
       <VStack
         maxW={{ base: '100%', md: '90%', lg: '85%', xl: '80%' }}
         gap={0}
@@ -42,7 +38,7 @@ function EventDetail(props) {
         {/* Mobile image */}
         <Image
           w={{ base: '100%', md: '50%' }}
-          src={props.image}
+          src={props.event.image}
           _after={{ content: {} }}
           display={{ base: 'flex', md: 'none' }}
         />
@@ -69,7 +65,7 @@ function EventDetail(props) {
             {/* Medium and up image */}
             <Image
               w={{ base: '100%', md: '40%', xl: '45%' }}
-              src={props.image}
+              src={props.event.image}
               _after={{ content: {} }}
               display={{ base: 'none', md: 'flex' }}
               borderRadius="10px"
@@ -84,7 +80,7 @@ function EventDetail(props) {
                 fontWeight={'black'}
                 p={0}
               >
-                {props.event_name}
+                {props.event.event_name}
               </Heading>
               <HStack>
                 <Icon
@@ -96,7 +92,7 @@ function EventDetail(props) {
                   fontWeight="light"
                   p={0}
                 >
-                  {props.location}, 19:00 09.10.2022
+                  {props.event.location}, 19:00 09.10.2022
                 </Text>
               </HStack>
               <Button
@@ -122,8 +118,8 @@ function EventDetail(props) {
             <TabPanels>
               {/* Details */}
               <TabPanel>
-                {props.descriptions !== null ? (
-                  props.descriptions.map(des => (
+                {props.event.descriptions !== null ? (
+                  props.event.descriptions.map(des => (
                     <Text
                       key={nanoid()}
                       fontSize="md"
@@ -143,45 +139,17 @@ function EventDetail(props) {
               {/* Tickets */}
               <TabPanel>
                 {/* <VStack align="left" gap={2}> */}
-                {props.tickets.length > 0 ? (
+                {props.event.tickets.length > 0 ? (
                   <VStack w="100%" gap="15px" mt="20px">
-                    {props.tickets.map(ticket => {
-                      console.log(ticket);
-                      return (
-                        <VStack
-                          key={nanoid()}
-                          w="100%"
-                          alignItems="space-between"
-                        >
-                          <HStack gap={0}>
-                            <Text>
-                              <b>{ticket.ticket_type},</b> {ticket.price} euros
-                            </Text>
-                            <Spacer />
-
-                            {/* Ticket number selector */}
-                            <NumberInput
-                              defaultValue={0}
-                              max={5}
-                              min={0}
-                              clampValueOnBlur={false}
-                              maxW="20%"
-                              size={{ base: 'sm', md: 'md' }}
-                            >
-                              <NumberInputField />
-                              <NumberInputStepper>
-                                <NumberIncrementStepper />
-                                <NumberDecrementStepper />
-                              </NumberInputStepper>
-                            </NumberInput>
-
-                            <Button size={{ base: 'sm', md: 'md' }}>Buy</Button>
-                          </HStack>
-                          <Text>{ticket.description}</Text>
-                          <Divider />
-                        </VStack>
-                      );
-                    })}
+                    {props.event.tickets.map(ticket => (
+                      <BuyTicketInput
+                        key={nanoid()}
+                        eventName={props.event.event_name}
+                        image={props.event.image}
+                        eventId={props.event.event_id}
+                        ticket={ticket}
+                      />
+                    ))}
                   </VStack>
                 ) : (
                   <Text fontSize="md" fontWeight="light">
@@ -196,7 +164,7 @@ function EventDetail(props) {
                 <Heading fontSize="xl" pt={5}>
                   Oranizer email
                 </Heading>
-                <Text>{props.organizer_email}</Text>
+                <Text>{props.event.organizer_email}</Text>
               </TabPanel>
             </TabPanels>
           </Tabs>

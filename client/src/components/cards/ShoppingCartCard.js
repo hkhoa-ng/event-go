@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Image,
   Text,
@@ -13,54 +13,80 @@ import {
   IconButton,
   Show,
   Hide,
+  Link,
+  useToast,
 } from '@chakra-ui/react';
 import { FaTrashAlt } from 'react-icons/fa';
+import ShoppingCartContext from '../../context/ShoppingCartContext';
+import { Link as ReactLink } from 'react-router-dom';
 
-function ShoppingCartCard() {
-  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
-    useNumberInput({
-      step: 1,
-      defaultValue: 1,
-      min: 0,
-      max: 99,
-    });
+function ShoppingCartCard({
+  eventName,
+  ticketType,
+  eventId,
+  image,
+  price,
+  quantity,
+}) {
+  const { addOneToCart, removeOneFromCart, removeTicketsFromCart } =
+    useContext(ShoppingCartContext);
 
-  const inc = getIncrementButtonProps();
-  const dec = getDecrementButtonProps();
-  const input = getInputProps();
+  const toast = useToast();
 
   return (
     <Stack direction="column" gap="10px">
       <Divider />
-      <Stack direction="row" gap="10px">
+      <Stack
+        direction="row"
+        gap="10px"
+        alignItems={{ base: 'space-between', md: 'center' }}
+      >
         <Image
-          w={{ base: '30%', xl: '20%' }}
+          boxSize={{ base: '30%', xl: '20%' }}
           maxH="100%"
           borderRadius={5}
-          src="https://images.unsplash.com/photo-1516981442399-a91139e20ff8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+          src={image}
         />
+
         {/* Left group */}
         <VStack
           alignItems="flex-start"
           //   bg="teal.800"
           justifyContent="space-between"
         >
-          <Text fontSize={{ base: '1rem', md: '1.5rem' }}>Cool event name</Text>
+          <Link
+            as={ReactLink}
+            to={`/${eventId}`}
+            fontSize={{ base: '1rem', md: '1.5rem' }}
+          >
+            {eventName}
+          </Link>
           <Text fontWeight="light" color="gray.400">
-            $12.99 | Available
+            {ticketType} x {quantity} | ${price}
           </Text>
 
           <HStack gap="0" maxW="300px">
-            <Button {...inc} size={{ base: 'sm', md: 'md' }}>
+            <Button
+              onClick={() => {
+                addOneToCart(eventName, ticketType);
+              }}
+              size={{ base: 'sm', md: 'md' }}
+            >
               +
             </Button>
             <Input
-              {...input}
+              readOnly
+              value={quantity}
               size={{ base: 'sm', md: 'md' }}
               w="35%"
               textAlign="center"
             />
-            <Button {...dec} size={{ base: 'sm', md: 'md' }}>
+            <Button
+              onClick={() => {
+                removeOneFromCart(eventName, ticketType);
+              }}
+              size={{ base: 'sm', md: 'md' }}
+            >
               -
             </Button>
           </HStack>
@@ -79,7 +105,7 @@ function ShoppingCartCard() {
             fontSize={{ base: '1rem', md: '1.5rem' }}
             textAlign="right"
           >
-            $12.99
+            ${price * quantity}
           </Text>
           <Hide above="md">
             <IconButton
@@ -88,6 +114,17 @@ function ShoppingCartCard() {
               colorScheme="red"
               variant="outline"
               display={{ base: 'flex', md: 'none' }}
+              onClick={() => {
+                toast({
+                  title: 'Tickets removed!',
+                  description: `Removed ${quantity} ${ticketType} tickets of ${eventName} from cart.`,
+                  status: 'warning',
+                  position: 'top-right',
+                  isClosable: 'true',
+                  duration: 4000,
+                });
+                removeTicketsFromCart(eventName, ticketType);
+              }}
             />
           </Hide>
 
@@ -97,6 +134,17 @@ function ShoppingCartCard() {
               leftIcon={<FaTrashAlt />}
               colorScheme="red"
               variant="outline"
+              onClick={() => {
+                toast({
+                  title: 'Tickets removed!',
+                  description: `Removed ${quantity} ${ticketType} tickets of ${eventName} from cart.`,
+                  status: 'warning',
+                  position: 'top-right',
+                  isClosable: 'true',
+                  duration: 4000,
+                });
+                removeTicketsFromCart(eventName, ticketType);
+              }}
             >
               Remove
             </Button>

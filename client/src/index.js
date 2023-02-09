@@ -5,6 +5,7 @@ import App from './App';
 import myTheme from './styles/theme';
 import { BrowserRouter } from 'react-router-dom';
 import { EventProvider } from './context/EventContext';
+import { ShoppingCartProvider } from './context/ShoppingCartContext';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
@@ -13,8 +14,10 @@ root.render(
   <StrictMode>
     <BrowserRouter>
       <EventProvider>
-        <ColorModeScript initialColorMode={myTheme.config.initialColorMode} />
-        <App />
+        <ShoppingCartProvider>
+          <ColorModeScript initialColorMode={myTheme.config.initialColorMode} />
+          <App />
+        </ShoppingCartProvider>
       </EventProvider>
     </BrowserRouter>
   </StrictMode>

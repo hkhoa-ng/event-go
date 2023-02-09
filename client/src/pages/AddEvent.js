@@ -11,31 +11,51 @@ import {
   Text,
   Textarea,
   Divider,
-  Box,
-  SimpleGrid,
   Spacer,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  IconButton,
-  Radio,
-  Select,
 } from '@chakra-ui/react';
-import { BsPersonPlusFill } from 'react-icons/bs';
-import FriendCard from '../components/cards/FriendCard';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
+import InviteFriendsInput from '../components/inputs/InvitedFriendsInput';
 import EventContext from '../context/EventContext';
-import ChipInput from '../components/inputs/ChipInput';
+import EventTagsInput from '../components/inputs/EventTagsInput';
 
 function AddEvent() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const { availableTags } = useContext(EventContext);
-  const [newEventTags, setNewEventTags] = useState([]);
+  const availableFriends = [
+    'John Smith',
+    'Jane Doe',
+    'An Nguyen',
+    'Jadon Stuart',
+    'Steven Buitrago',
+    'Cuong Nguyen',
+    'Chi Nguyen',
+    'Nhi Tran',
+    'Duy Vu',
+    'Nam Anh',
+    'The Anh',
+  ];
+
+  const [eventName, setEventName] = useState('');
+  const [eventDescription, setEventDescription] = useState('');
+  const [eventDate, setEventDate] = useState('');
+  const [eventLocation, setEventLocation] = useState('');
+  const [eventDetails, setEventDetails] = useState('');
+  const [eventTags, setEventTags] = useState([]);
+  const [invitedFriends, setInvitedFriends] = useState([]);
+
+  const createNewEventObject = () => {
+    const date = new Date(eventDate);
+    const newEventObject = {
+      eventName: eventName,
+      organizerEmail: 'e@org.com',
+      eventTime: date.toISOString(),
+      location: eventLocation,
+      image: 'https://shrtco.de/lTxhxR',
+      description: [eventDescription, eventDetails],
+      tags: eventTags,
+      invitedFriends: invitedFriends,
+    };
+    console.table(newEventObject);
+    return newEventObject;
+  };
 
   return (
     <Center flexDir="column">
@@ -76,15 +96,19 @@ function AddEvent() {
                 type="text"
                 placeholder="Very exciting event!"
                 variant="flushed"
+                value={eventName}
+                onChange={e => setEventName(e.target.value)}
               />
               {/* </InputGroup> */}
               <Text fontWeight="semibold" pt="15px">
-                Description
+                Description (optional)
               </Text>
               <Input
                 type="text"
                 placeholder="Short description of the event"
                 variant="flushed"
+                value={eventDescription}
+                onChange={e => setEventDescription(e.target.value)}
               />
 
               <Text fontWeight="semibold" pt="15px">
@@ -94,6 +118,8 @@ function AddEvent() {
                 type="datetime-local"
                 placeholder="Select Data and Time"
                 variant="flushed"
+                value={eventDate}
+                onChange={e => setEventDate(e.target.value)}
               />
 
               <Text fontWeight="semibold" pt="15px">
@@ -103,14 +129,13 @@ function AddEvent() {
                 type="text"
                 placeholder="Location of the event"
                 variant="flushed"
+                value={eventLocation}
+                onChange={e => setEventLocation(e.target.value)}
               />
-              <Text fontWeight="semibold" pt="15px">
-                Event Tags
-              </Text>
-              <ChipInput
+              <EventTagsInput
                 availableTags={availableTags}
-                selectedTags={newEventTags}
-                setSelectedTags={setNewEventTags}
+                selectedTags={eventTags}
+                setSelectedTags={setEventTags}
               />
             </VStack>
             <Divider orientation="vertical" />
@@ -120,157 +145,33 @@ function AddEvent() {
               alignItems="left"
               py={{ base: '20px', md: '0px' }}
             >
-              <Text fontWeight="semibold">Event Details</Text>
+              <Text fontWeight="semibold">Event Details (optional)</Text>
               <Textarea
                 resize="none"
                 w="100%"
                 placeholder="More details of the event..."
+                value={eventDetails}
+                onChange={e => setEventDetails(e.target.value)}
               />
 
-              <Text pt="15px" fontWeight="semibold">
-                Friends Attending
-              </Text>
-              <Box
-                overflowY="auto"
-                maxH="30vh"
-                pr="15px"
-                sx={{
-                  '::-webkit-scrollbar': {
-                    width: '10px',
-                  },
-                  '::-webkit-scrollbar-thumb': {
-                    background: 'gray.700',
-                    borderRadius: '5px',
-                  },
-                  // '::-webkit-scrollbar-track': {
-                  //   background: 'gray.900',
-                  // },
-                }}
-              >
-                <SimpleGrid columns={{ base: 1, md: 2 }} spacing={5} py="10px">
-                  <FriendCard
-                    button={
-                      <IconButton
-                        size="sm"
-                        variant="ghost"
-                        fontSize="1.5rem"
-                        icon={<AiOutlineCloseCircle />}
-                      />
-                    }
-                  />
-                  <FriendCard
-                    button={
-                      <IconButton
-                        size="sm"
-                        variant="ghost"
-                        fontSize="1.5rem"
-                        icon={<AiOutlineCloseCircle />}
-                      />
-                    }
-                  />
-                  <FriendCard
-                    button={
-                      <IconButton
-                        size="sm"
-                        variant="ghost"
-                        fontSize="1.5rem"
-                        icon={<AiOutlineCloseCircle />}
-                      />
-                    }
-                  />
-                  <FriendCard
-                    button={
-                      <IconButton
-                        size="sm"
-                        variant="ghost"
-                        fontSize="1.5rem"
-                        icon={<AiOutlineCloseCircle />}
-                      />
-                    }
-                  />
-                  <FriendCard
-                    button={
-                      <IconButton
-                        size="sm"
-                        variant="ghost"
-                        fontSize="1.5rem"
-                        icon={<AiOutlineCloseCircle />}
-                      />
-                    }
-                  />
-                </SimpleGrid>
-              </Box>
-              <Button
-                colorScheme="messenger"
-                textAlign="left"
-                leftIcon={<BsPersonPlusFill />}
-                onClick={onOpen}
-              >
-                Invite friend
-              </Button>
-              <Modal
-                isOpen={isOpen}
-                onClose={onClose}
-                isCentered
-                motionPreset="slideInBottom"
-                size={{ base: 'xs', md: 'lg' }}
-              >
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>Friends</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
-                    <Box
-                      overflowY="auto"
-                      maxH="50vh"
-                      pr="15px"
-                      sx={{
-                        '::-webkit-scrollbar': {
-                          width: '10px',
-                        },
-                        '::-webkit-scrollbar-thumb': {
-                          background: 'gray.600',
-                          borderRadius: '5px',
-                        },
-                        // '::-webkit-scrollbar-track': {
-                        //   background: 'gray.900',
-                        // },
-                      }}
-                    >
-                      <SimpleGrid columns={1} spacing={5} py="10px">
-                        <FriendCard button={<Radio type="checkbox" />} />
-                        <FriendCard button={<Radio type="checkbox" />} />
-                        <FriendCard button={<Radio type="checkbox" />} />
-                        <FriendCard button={<Radio type="checkbox" />} />
-                        <FriendCard button={<Radio type="checkbox" />} />
-                      </SimpleGrid>
-                    </Box>
-                  </ModalBody>
-
-                  <ModalFooter>
-                    <HStack w="100%" justifyContent="space-around">
-                      <Button colorScheme="green" onClick={onClose}>
-                        Add Selected
-                      </Button>
-                      <Button
-                        colorScheme="red"
-                        variant="ghost"
-                        mr={3}
-                        onClick={onClose}
-                      >
-                        Cancel
-                      </Button>
-                    </HStack>
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
+              <InviteFriendsInput
+                availableFriends={availableFriends}
+                invitedFriends={invitedFriends}
+                setInvitedFriends={setInvitedFriends}
+              />
             </VStack>
           </Stack>
 
           <Divider />
           <HStack w="100%">
             <Spacer />
-            <Button w={{ base: '50%' }} colorScheme="green">
+            <Button
+              w={{ base: '50%' }}
+              colorScheme="green"
+              onClick={() => {
+                createNewEventObject();
+              }}
+            >
               Add Event
             </Button>
             <Spacer />

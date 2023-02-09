@@ -60,7 +60,7 @@ function App() {
               <Route
                 key={nanoid()}
                 path={`/${e.event_id}`}
-                element={<LazyLoadedEventDetail {...e} />}
+                element={<LazyLoadedEventDetail event={e} />}
               />
             ))}
             <Route path={`/${username}`} element={<LazyLoadedProfile />} />
