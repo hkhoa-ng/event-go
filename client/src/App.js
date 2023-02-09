@@ -15,6 +15,13 @@ const LazyLoadedProfile = React.lazy(() => import('./pages/Profile'));
 const LazyLoadedLogin = React.lazy(() => import('./pages/Login'));
 const LazyLoadedAddEvent = React.lazy(() => import('./pages/AddEvent'));
 
+import {
+    accessKeyId,
+  secretKey,
+  region,
+  userPoolId,
+  userWebClientId
+} from './utility/envConfig'
 function App() {
   const username = 'hkhoa';
   const name = 'Khoa Nguyen';
