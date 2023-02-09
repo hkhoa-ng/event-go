@@ -12,7 +12,13 @@ import Login from './pages/Login';
 import AddEvent from './pages/AddEvent';
 
 import EventContext from './context/EventContext';
-
+import {
+    accessKeyId,
+  secretKey,
+  region,
+  userPoolId,
+  userWebClientId
+} from './utility/envConfig'
 function App() {
   const username = 'hkhoa';
   const name = 'Khoa Nguyen';
