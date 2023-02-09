@@ -65,17 +65,15 @@ const ChipInput = ({ availableTags, selectedTags, setSelectedTags }) => {
             {availableTags.map(tag => {
               if (!selectedTags.includes(tag))
                 return (
-                  <option>
-                    <MenuItem
-                      key={tag}
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleTagSelection(tag)}
-                      p={3}
-                    >
-                      {tag.replace(/^\w/, c => c.toUpperCase())}
-                    </MenuItem>
-                  </option>
+                  <MenuItem
+                    key={tag}
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleTagSelection(tag)}
+                    p={3}
+                  >
+                    {tag.replace(/^\w/, c => c.toUpperCase())}
+                  </MenuItem>
                 );
             })}
           </MenuList>
