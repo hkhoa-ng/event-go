@@ -8,7 +8,7 @@ import {
   Spacer,
   HStack,
   Input,
-  useNumberInput,
+  Box,
   Button,
   IconButton,
   Show,
@@ -41,12 +41,15 @@ function ShoppingCartCard({
         gap="10px"
         alignItems={{ base: 'space-between', md: 'center' }}
       >
-        <Image
-          boxSize={{ base: '30%', xl: '20%' }}
-          maxH="100%"
-          borderRadius={5}
-          src={image}
-        />
+        <Box width={{ base: '30%', xl: '20%' }}>
+          <Image
+            boxSize="100%"
+            objectFit="cover"
+            // maxH="100%"
+            borderRadius={5}
+            src={image}
+          />
+        </Box>
 
         {/* Left group */}
         <VStack
