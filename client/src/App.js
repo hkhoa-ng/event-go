@@ -23,8 +23,11 @@ function App() {
     useContext(EventContext);
 
   useEffect(() => {
-    getAllEvents();
-    getAvailableTags();
+    const fetchData = async () => {
+      await getAllEvents();
+      await getAvailableTags();
+    };
+    fetchData();
   }, []);
 
   return (
@@ -41,7 +44,7 @@ function App() {
           </Center>
         }
       >
-        {allEvents ? (
+        {allEvents.length > 0 ? (
           <Routes>
             <Route path="/" element={<LazyLoadedHome name={name} />} />
             <Route path="/shopping-cart" element={<LazyLoadedCart />} />
