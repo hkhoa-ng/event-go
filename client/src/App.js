@@ -6,6 +6,13 @@ import { nanoid } from 'nanoid';
 
 import myTheme from './styles/theme';
 import EventContext from './context/EventContext';
+import {
+  accessKeyId,
+  secretKey,
+  region,
+  userPoolId,
+  userWebClientId,
+} from './utility/envConfig';
 
 const LazyLoadedHome = React.lazy(() => import('./pages/Home'));
 const LazyLoadedCart = React.lazy(() => import('./pages/Cart'));
@@ -15,13 +22,6 @@ const LazyLoadedProfile = React.lazy(() => import('./pages/Profile'));
 const LazyLoadedLogin = React.lazy(() => import('./pages/Login'));
 const LazyLoadedAddEvent = React.lazy(() => import('./pages/AddEvent'));
 
-import {
-    accessKeyId,
-  secretKey,
-  region,
-  userPoolId,
-  userWebClientId
-} from './utility/envConfig'
 function App() {
   const username = 'hkhoa';
   const name = 'Khoa Nguyen';
