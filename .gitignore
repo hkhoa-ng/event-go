@@ -8,6 +8,7 @@ cli-server/node_modules
 /client/node_modules
 /cli-server/node_modules
 /server/node_modules
+/client/build
 
 # testing
 /coverage
