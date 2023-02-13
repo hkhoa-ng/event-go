@@ -36,9 +36,8 @@ const StripeCheckoutButton = ({ price }) => {
       panelLabel="Pay Now"
       token={onToken}
       stripeKey={publishableKey}
-    >
-      <Button colorScheme={'green'}>Proceed to checkout</Button>
-    </StripeCheckout>
+      currency="EUR"
+    />
   );
 };
 
