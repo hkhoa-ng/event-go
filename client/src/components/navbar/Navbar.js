@@ -26,8 +26,12 @@ import UserContext from '../../context/UserContext';
 const Navbar = () => {
   const { user, signOut } = useContext(UserContext);
 
-  const name = user.attributes.name;
-  const username = user.attributes.preferred_username;
+  let name, username;
+
+  if (user !== null) {
+    name = user.attributes.name;
+    username = user.attributes.preferred_username;
+  }
 
   return (
     <Box
