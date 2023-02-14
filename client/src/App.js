@@ -38,12 +38,18 @@ function App() {
   const { checkIfLoggedIn, storeUserToLocalStorage } = useContext(UserContext);
   // this use to check if user is logged in, can be used in different pages to persist user session
   useEffect(() => {
-    checkIfLoggedIn(setLoading);
+    async function handleCheckLogIn() {
+      await checkIfLoggedIn(setLoading);
+    }
+    handleCheckLogIn();
   }, []);
 
   // this use to persist user session even with refresh button pressed by using the local storage
   useEffect(() => {
-    storeUserToLocalStorage(setLoading);
+    async function handleStoreUserToLocalStorage() {
+      await storeUserToLocalStorage(setLoading);
+    }
+    handleStoreUserToLocalStorage();
   }, []);
 
   useEffect(() => {

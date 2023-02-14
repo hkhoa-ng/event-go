@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, Container, Flex } from '@chakra-ui/react';
 
 import Carousel from '../components/container/Carousel';
@@ -7,10 +7,25 @@ import EventContainer from '../components/container/EventContainer';
 import Navbar from '../components/navbar/Navbar';
 
 import EventContext from '../context/EventContext';
+import UserContext from '../context/UserContext';
 import { nanoid } from 'nanoid';
 
 function Home(props) {
   const { allEvents, availableTags } = useContext(EventContext);
+  const { checkIfLoggedIn, storeUserToLocalStorage } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  // // this use to check if user is logged in, can be used in different pages to persist user session
+  useEffect(() => {
+    async function handleCheckLogIn() {
+      await checkIfLoggedIn(setLoading);
+    }
+    handleCheckLogIn();
+  }, []);
+
+  // // this use to persist user session even with refresh button pressed by using the local storage
+  // useEffect(() => {
+  //   storeUserToLocalStorage(setLoading);
+  // }, []);
 
   return (
     <Box>

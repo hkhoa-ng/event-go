@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Box,
@@ -25,12 +26,21 @@ import UserContext from '../../context/UserContext';
 
 const Navbar = () => {
   const { user, signOut } = useContext(UserContext);
+  const navigate = useNavigate();
 
   let name, username;
 
+  // console.log(user);
+  // name = user.attributes.name;
+  // username = user.attributes.preferred_username;
+
   if (user !== null) {
-    name = user.attributes.name;
-    username = user.attributes.preferred_username;
+    try {
+      name = user.attributes.name;
+      username = user.attributes.preferred_username;
+    } catch (err) {
+      console.error(`Problem when displaying user: ${err}`);
+    }
   }
 
   return (
@@ -44,13 +54,6 @@ const Navbar = () => {
       width="100%"
       zIndex="10"
     >
-      {/* <Button
-        onClick={() => {
-          console.table(user.attributes);
-        }}
-      >
-        Print user
-      </Button> */}
       <Container minW="90%" px={4} mx="auto">
         <HStack>
           <Link to={`/`} _hover={{ textDecoration: 'none' }}>
@@ -155,6 +158,7 @@ const Navbar = () => {
                     as="button"
                     onClick={async () => {
                       await signOut();
+                      navigate('/');
                     }}
                   >
                     Logout
@@ -174,14 +178,14 @@ const Navbar = () => {
                   </Button>
                 </Link>
 
-                <IconButton
-                  colorScheme="whatsapp"
-                  icon={<FaSignInAlt />}
-                  // variant="outline"
-                  display={{ base: 'flex', md: 'none' }}
-                >
-                  <Link to={`/login`} _hover={{ textDecoration: 'none' }} />
-                </IconButton>
+                <Link to={`/login`} _hover={{ textDecoration: 'none' }}>
+                  <IconButton
+                    colorScheme="whatsapp"
+                    icon={<FaSignInAlt />}
+                    // variant="outline"
+                    display={{ base: 'flex', md: 'none' }}
+                  />
+                </Link>
               </div>
             )}
           </HStack>
