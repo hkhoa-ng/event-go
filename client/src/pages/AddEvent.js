@@ -59,7 +59,7 @@ function AddEvent() {
 
   return (
     <Center flexDir="column">
-      <Navbar username={'hkhoa'} name="Khoa Nguyen" />
+      <Navbar />
       <Spacer />
       <Stack
         direction={{ base: 'column', lg: 'row' }}

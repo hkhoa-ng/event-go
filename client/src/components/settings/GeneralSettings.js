@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Stack,
   Heading,
@@ -8,8 +8,11 @@ import {
   SimpleGrid,
   HStack,
 } from '@chakra-ui/react';
+import UserContext from '../../context/UserContext';
 
 function GeneralSettings() {
+  const { user } = useContext(UserContext);
+  const userInfo = user.attributes;
   return (
     <Stack pl="15px" gap="20px" pb="20px">
       <Heading

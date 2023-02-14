@@ -14,7 +14,7 @@ function Home(props) {
 
   return (
     <Box>
-      <Navbar username={'hkhoa'} name="Khoa Nguyen" />
+      <Navbar />
       <Flex
         minW="90vw"
         minH="100vh"

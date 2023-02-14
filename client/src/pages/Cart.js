@@ -31,7 +31,7 @@ function Cart() {
 
   return (
     <Center flexDir="column">
-      <Navbar username={'hkhoa'} name="Khoa Nguyen" />
+      <Navbar />
 
       <Stack
         direction={{ base: 'column', lg: 'row' }}

@@ -6,6 +6,7 @@ import myTheme from './styles/theme';
 import { BrowserRouter } from 'react-router-dom';
 import { EventProvider } from './context/EventContext';
 import { ShoppingCartProvider } from './context/ShoppingCartContext';
+import { UserProvider } from './context/UserContext';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
@@ -15,8 +16,12 @@ root.render(
     <BrowserRouter>
       <EventProvider>
         <ShoppingCartProvider>
-          <ColorModeScript initialColorMode={myTheme.config.initialColorMode} />
-          <App />
+          <UserProvider>
+            <ColorModeScript
+              initialColorMode={myTheme.config.initialColorMode}
+            />
+            <App />
+          </UserProvider>
         </ShoppingCartProvider>
       </EventProvider>
     </BrowserRouter>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Center,
   Stack,
@@ -29,11 +29,16 @@ import GeneralSettings from '../components/settings/GeneralSettings';
 import PeopleSettings from '../components/settings/PeopleSettings';
 import ProfileSettings from '../components/settings/ProfileSettings';
 import SecuritySettings from '../components/settings/SecuritySettings';
+import UserContext from '../context/UserContext';
 
 function Settings() {
+  const { user } = useContext(UserContext);
+  const userInfo = user.attributes;
+  console.table(userInfo);
+
   return (
     <Center flexDir="column">
-      <Navbar username={'hkhoa'} name="Khoa Nguyen" />
+      <Navbar />
 
       <Center my={'3em'} position="relative">
         {/* Background image */}
@@ -74,7 +79,7 @@ function Settings() {
           >
             <Spacer />
             <Heading fontSize={{ base: '1rem', md: '1.2rem' }}>
-              Khoa Nguyen
+              {userInfo.name}
             </Heading>
             <Text>Your Settings</Text>
           </VStack>

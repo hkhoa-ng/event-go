@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useEffect } from 'react';
+import React, { forwardRef, useState, useEffect, useContext } from 'react';
 import {
   Stack,
   Heading,
@@ -21,25 +21,28 @@ import {
 } from '@chakra-ui/react';
 import { FiEdit } from 'react-icons/fi';
 import SingleFieldInput from '../inputs/SingleFieldInput';
+import UserContext from '../../context/UserContext';
 
 function ProfileSettings() {
+  const { user } = useContext(UserContext);
+  const userInfo = user.attributes;
   // Handle Name change
   const {
     isOpen: isNameOpen,
     onOpen: onNameOpen,
     onClose: onNameClose,
   } = useDisclosure();
-  const [nameValue, setNameValue] = React.useState('Khoa Nguyen');
-  const [name, setName] = useState('Khoa Nguyen');
+  const [nameValue, setNameValue] = React.useState(userInfo.name);
+  const [name, setName] = useState(userInfo.name);
 
-  // Handle ...... change
+  // Handle Email change
   const {
     isOpen: isEmailOpen,
     onOpen: onEmailOpen,
     onClose: onEmailClose,
   } = useDisclosure();
-  const [emailValue, setEmailValue] = React.useState('khoa.nguyen@example.com');
-  const [email, setEmail] = useState('khoa.nguyen@example.com');
+  const [emailValue, setEmailValue] = React.useState(userInfo.email);
+  const [email, setEmail] = useState(userInfo.email);
 
   return (
     <Stack px="15px">
@@ -54,7 +57,7 @@ function ProfileSettings() {
       {/* Username */}
       <SingleFieldInput
         label="Username"
-        defaultValue="nhkhoa"
+        defaultValue={userInfo.preferred_username}
         type="text"
         placeholder="username"
       />
@@ -62,7 +65,7 @@ function ProfileSettings() {
       {/* Full name */}
       <SingleFieldInput
         label="Full name"
-        defaultValue="Khoa Nguyen"
+        defaultValue={userInfo.name}
         type="text"
         placeholder="John Smith"
       />
@@ -70,7 +73,7 @@ function ProfileSettings() {
       {/* Email */}
       <SingleFieldInput
         label="Email"
-        defaultValue="khoa.nguyen@example.com"
+        defaultValue={userInfo.email}
         type="email"
         placeholder="first.last@examlple.com"
       />
@@ -78,7 +81,7 @@ function ProfileSettings() {
       {/* Phone Number */}
       <SingleFieldInput
         label="Phone number"
-        defaultValue="(+358) 123237746"
+        defaultValue={userInfo.phone_number}
         type="tel"
         placeholder="(+01) 123456789"
       />

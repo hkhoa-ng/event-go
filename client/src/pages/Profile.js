@@ -22,7 +22,7 @@ import Navbar from '../components/navbar/Navbar';
 function Profile() {
   return (
     <Center flexDir="column">
-      <Navbar username={'hkhoa'} name="Khoa Nguyen" />
+      <Navbar />
 
       {/* Avatar and background image */}
       <Center my={'3em'} position="relative">

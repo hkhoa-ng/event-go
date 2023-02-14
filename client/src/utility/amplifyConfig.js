@@ -1,12 +1,12 @@
-const {Amplify} = require('aws-amplify');
+const { Amplify } = require('aws-amplify');
 const { Credentials } = require('aws-sdk');
 const {
   accessKeyId,
   secretKey,
   region,
   userPoolId,
-  userWebClientId
-} = require('./envConfig')
+  userWebClientId,
+} = require('./envConfig');
 const credentials = new Credentials({
   accessKeyId: accessKeyId,
   secretAccessKey: secretKey,
@@ -16,6 +16,6 @@ Amplify.configure({
     region: region,
     userPoolId: userPoolId,
     userPoolWebClientId: userWebClientId,
-    credentials
+    credentials,
   },
 });

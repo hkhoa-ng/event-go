@@ -26,7 +26,7 @@ import Navbar from '../components/navbar/Navbar';
 function EventDetail(props) {
   return (
     <Center>
-      <Navbar username={'hkhoa'} name="Khoa Nguyen" />
+      <Navbar />
       <VStack
         maxW={{ base: '100%', md: '90%', lg: '85%', xl: '80%' }}
         gap={0}
