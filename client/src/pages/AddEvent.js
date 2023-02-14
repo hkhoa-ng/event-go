@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Navbar from '../components/navbar/Navbar';
 import {
   Center,
@@ -16,8 +16,17 @@ import {
 import InviteFriendsInput from '../components/inputs/InvitedFriendsInput';
 import EventContext from '../context/EventContext';
 import EventTagsInput from '../components/inputs/EventTagsInput';
-
+import UserContext from '../context/UserContext';
 function AddEvent() {
+  const { checkIfLoggedIn, storeUserToLocalStorage } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  // // this use to check if user is logged in, can be used in different pages to persist user session
+  useEffect(() => {
+    async function handleCheckLogIn() {
+      await checkIfLoggedIn(setLoading);
+    }
+    handleCheckLogIn();
+  }, []);
   const { availableTags } = useContext(EventContext);
   const availableFriends = [
     'John Smith',

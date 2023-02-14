@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Center,
   Heading,
@@ -19,8 +19,18 @@ import { HiOutlineMail } from 'react-icons/hi';
 import StripeCheckoutButton from '../components/stripeCheckoutButton/stripeCheckoutButton';
 import ShoppingCartContext from '../context/ShoppingCartContext';
 import { nanoid } from 'nanoid';
+import UserContext from '../context/UserContext';
 
 function Cart() {
+  const { checkIfLoggedIn, storeUserToLocalStorage } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  // // this use to check if user is logged in, can be used in different pages to persist user session
+  useEffect(() => {
+    async function handleCheckLogIn() {
+      await checkIfLoggedIn(setLoading);
+    }
+    handleCheckLogIn();
+  }, []);
   const { shoppingCartTickets, getTotalPrice } =
     useContext(ShoppingCartContext);
   const [total, setTotal] = useState(getTotalPrice());

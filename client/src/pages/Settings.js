@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Center,
   Stack,
@@ -32,7 +32,17 @@ import SecuritySettings from '../components/settings/SecuritySettings';
 import UserContext from '../context/UserContext';
 
 function Settings() {
+  const { checkIfLoggedIn, storeUserToLocalStorage } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  // // this use to check if user is logged in, can be used in different pages to persist user session
+  useEffect(() => {
+    async function handleCheckLogIn() {
+      await checkIfLoggedIn(setLoading);
+    }
+    handleCheckLogIn();
+  }, []);
   const { user } = useContext(UserContext);
+  console.log(user);
   const userInfo = user.attributes;
   console.table(userInfo);
 

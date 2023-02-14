@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Image,
   Box,
@@ -22,8 +22,17 @@ import { MdLocationOn } from 'react-icons/md';
 import { nanoid } from 'nanoid';
 import BuyTicketInput from '../components/inputs/BuyTicketInput';
 import Navbar from '../components/navbar/Navbar';
-
+import UserContext from '../context/UserContext';
 function EventDetail(props) {
+  const { checkIfLoggedIn, storeUserToLocalStorage } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  // // this use to check if user is logged in, can be used in different pages to persist user session
+  useEffect(() => {
+    async function handleCheckLogIn() {
+      await checkIfLoggedIn(setLoading);
+    }
+    handleCheckLogIn();
+  }, []);
   return (
     <Center>
       <Navbar />

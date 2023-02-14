@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Box,
   Heading,
@@ -18,8 +18,17 @@ import Calendar from 'react-calendar';
 import '../styles/Calendar.css';
 
 import Navbar from '../components/navbar/Navbar';
-
+import UserContext from '../context/UserContext';
 function Profile() {
+  const { checkIfLoggedIn, storeUserToLocalStorage } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  // // this use to check if user is logged in, can be used in different pages to persist user session
+  useEffect(() => {
+    async function handleCheckLogIn() {
+      await checkIfLoggedIn(setLoading);
+    }
+    handleCheckLogIn();
+  }, []);
   return (
     <Center flexDir="column">
       <Navbar />

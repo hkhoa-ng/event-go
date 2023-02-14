@@ -25,16 +25,25 @@ export function UserProvider({ children }) {
 
   // this use to check if user is logged in, can be used in different pages to persist user session
   async function checkIfLoggedIn(setLoading) {
-    Auth.currentAuthenticatedUser()
-      .then(user => {
-        setUser(user);
-        setLoading(false);
-        console.log(`Signed in with user email ${user.attributes.email}`);
-      })
-      .catch(() => {
-        setLoading(false);
-        console.log(`Not signed in!`);
-      });
+    const user = await Auth.currentAuthenticatedUser().catch(err => err);
+    console.log('Checking if user logged in...');
+    console.log(user);
+    if (user !== 'The user is not authenticated') {
+      await setUser(user);
+    }
+    // .then(async user => {
+    //   // const currUser = {
+    //   //   attributes: user.attributes,
+    //   // };
+    //   setUser(user);
+    //   // console.log(currUser);
+    //   // setLoading(false);
+    //   console.log(`Signed in with user email ${user.attributes.email}`);
+    // })
+    // .catch(() => {
+    //   setLoading(false);
+    //   console.log(`Not signed in!`);
+    // });
   }
 
   // this use to persist user session even with refresh button pressed by using the local storage
@@ -168,13 +177,20 @@ export function UserProvider({ children }) {
     e.preventDefault();
     try {
       await Auth.signIn(email, password).then(
-        ({ accessToken, idToken, refreshToken, user }) => {
-          setUser(user);
-          // set more needed information
+        // ({ accessToken, idToken, refreshToken, user }) => {
+        //   console.log(`Trying to set user: ${user}`);
+        //   setUser(user);
+
+        //   // set more needed information
+        // }
+        data => {
+          const currUser = {
+            attributes: data.attributes,
+          };
+          setUser(currUser);
         }
       );
       // access user data here;
-      setUser();
       console.log('Sign in successful');
       return 'Success!';
     } catch (err) {
@@ -188,6 +204,7 @@ export function UserProvider({ children }) {
       await Auth.signOut();
       console.log('Log out!');
       localStorage.clear();
+      setUser(null);
     } catch (error) {
       setError(error);
       console.log('error signing out: ', error);
