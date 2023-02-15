@@ -108,7 +108,7 @@ const Navbar = () => {
                   />
                 </MenuButton>
                 <MenuList zIndex={5} bg="brand.600">
-                  <Link to={`/hkhoa`} _hover={{ textDecoration: 'none' }}>
+                  <Link to={`/${username}`} _hover={{ textDecoration: 'none' }}>
                     <MenuItem>
                       <VStack justify="start" alignItems="left">
                         <Text fontWeight="500">{name}</Text>

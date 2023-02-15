@@ -1,8 +1,19 @@
 import { useState, createContext } from 'react';
 import { Auth, Hub } from 'aws-amplify';
 import '../utility/amplifyConfig';
+import axios from 'axios';
 
 const UserContext = createContext();
+
+const url =
+  'https://khoa-nguyen-cors-anywhere.fly.dev/https://a1fzt90jn3.execute-api.eu-central-1.amazonaws.com/production';
+const xApiKey = 'DUBwlix96T5zt3M7tOnJ7ilJt6ufVG1436lyXzXh';
+const config = {
+  headers: {
+    'x-api-key': xApiKey,
+    'Content-Type': 'application/json',
+  },
+};
 
 export function UserProvider({ children }) {
   // sign in attributes: email, password
@@ -19,54 +30,38 @@ export function UserProvider({ children }) {
   // confirmation attribute: email, authCode
   const [authCode, setAuthCode] = useState('');
 
-  //   Keep track of the current user of this session
+  // Keep track of the current user of this session
   const [user, setUser] = useState(null);
   const [customState, setCustomState] = useState(null);
 
+  // All events ID that this user attend
+  // return an array of event ID's
+  const [userEvents, setUserEvents] = useState([]);
+
+  // All friends email of this user
+  // return an array of user email
+  const [allFriends, setAllFriends] = useState([]);
+
+  // All users of this service
+  const [allUsers, setAllUsers] = useState([]);
+
+  async function getAllUsers() {
+    const allUsersRes = await axios.get(`${url}/users`, config);
+
+    if (Array.isArray(allUsersRes.data.users)) {
+      setAllUsers([...allUsersRes.data.users]);
+    }
+  }
+
+  // TODO: function to get and fetch all user events
+
   // this use to check if user is logged in, can be used in different pages to persist user session
-  async function checkIfLoggedIn(setLoading) {
+  async function checkIfLoggedIn() {
     const user = await Auth.currentAuthenticatedUser().catch(err => err);
     console.log('Checking if user logged in...');
-    console.log(user);
     if (user !== 'The user is not authenticated') {
       await setUser(user);
     }
-    // .then(async user => {
-    //   // const currUser = {
-    //   //   attributes: user.attributes,
-    //   // };
-    //   setUser(user);
-    //   // console.log(currUser);
-    //   // setLoading(false);
-    //   console.log(`Signed in with user email ${user.attributes.email}`);
-    // })
-    // .catch(() => {
-    //   setLoading(false);
-    //   console.log(`Not signed in!`);
-    // });
-  }
-
-  // this use to persist user session even with refresh button pressed by using the local storage
-  async function storeUserToLocalStorage(setLoading) {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-      setLoading(false);
-      return;
-    }
-
-    Auth.currentSession()
-      .then(session => {
-        setUser(session.getIdToken().payload);
-        localStorage.setItem(
-          'user',
-          JSON.stringify(session.getIdToken().payload)
-        );
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
   }
 
   // use to listen for google login, because our require information has birthdate and phone_number, if the ggl account haven't provided that, it can't be logged in
@@ -176,20 +171,12 @@ export function UserProvider({ children }) {
   async function handleSignIn(e) {
     e.preventDefault();
     try {
-      await Auth.signIn(email, password).then(
-        // ({ accessToken, idToken, refreshToken, user }) => {
-        //   console.log(`Trying to set user: ${user}`);
-        //   setUser(user);
-
-        //   // set more needed information
-        // }
-        data => {
-          const currUser = {
-            attributes: data.attributes,
-          };
-          setUser(currUser);
-        }
-      );
+      await Auth.signIn(email, password).then(data => {
+        const currUser = {
+          attributes: data.attributes,
+        };
+        setUser(currUser);
+      });
       // access user data here;
       console.log('Sign in successful');
       return 'Success!';
@@ -251,7 +238,6 @@ export function UserProvider({ children }) {
         user,
         customState,
         // Functions for signing in and use session persistance
-        storeUserToLocalStorage,
         handleSignUp,
         listenForGoogleLogin,
         checkIfLoggedIn,
@@ -285,6 +271,9 @@ export function UserProvider({ children }) {
         validatePhoneNum,
         validateName,
         validateDob,
+        // Working with all users
+        allUsers,
+        getAllUsers,
       }}
     >
       {children}

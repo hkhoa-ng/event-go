@@ -100,6 +100,10 @@ export function ShoppingCartProvider({ children }) {
     }, 0);
   }
 
+  function clearShoppingCart() {
+    setShoppingCartTickets([]);
+  }
+
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -109,6 +113,7 @@ export function ShoppingCartProvider({ children }) {
         removeTicketsFromCart,
         addToCart,
         getTotalPrice,
+        clearShoppingCart,
       }}
     >
       {children}

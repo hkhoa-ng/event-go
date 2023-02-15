@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
-const cors = require('cors')
+const cors = require("cors");
 //const compression = require("compression");
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
@@ -9,9 +9,11 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const app = express();
 const port = process.env.PORT || 1000;
 
-app.use(cors({
-  origin: 'http://localhost:3000'
-}))
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //app.use(compression);

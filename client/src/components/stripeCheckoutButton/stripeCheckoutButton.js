@@ -1,7 +1,10 @@
 import StripeCheckout from 'react-stripe-checkout';
 import { Button } from '@chakra-ui/react';
 import axios from 'axios';
+import { useContext } from 'react';
+import ShoppingCartContext from '../../context/ShoppingCartContext';
 const StripeCheckoutButton = ({ price }) => {
+  const { clearShoppingCart } = useContext(ShoppingCartContext);
   const priceForStripe = price * 100;
   const publishableKey =
     'pk_test_51KSjpCBYp3P0VPu4qlVoSK2SwYMcS0HMwJmI8bPOkJFGDtxyrgYvz2EZNKBeb8n916k41ucT3Wu9qKI3q3QWpklJ00khAWF3Xz';
@@ -15,10 +18,12 @@ const StripeCheckoutButton = ({ price }) => {
       },
     })
       .then(res => {
+        clearShoppingCart();
         alert('Payment successful');
       })
       .catch(error => {
-        console.log('Payment error', JSON.parse(error));
+        // console.log('Payment error', JSON.parse(error));
+        console.error(`Error when processing payment: ${error}`);
         alert(
           'There was an issue with your payment. Please make sure you provided the test credit card.'
         );
@@ -38,7 +43,9 @@ const StripeCheckoutButton = ({ price }) => {
       stripeKey={publishableKey}
       currency="EUR"
     >
-      <Button colorScheme="green">Check Out</Button>
+      <Button colorScheme="green" w="100%">
+        Check Out
+      </Button>
     </StripeCheckout>
   );
 };

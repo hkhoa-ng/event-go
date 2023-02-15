@@ -7,13 +7,6 @@ import { nanoid } from 'nanoid';
 import myTheme from './styles/theme';
 import EventContext from './context/EventContext';
 import UserContext from './context/UserContext';
-import {
-  accessKeyId,
-  secretKey,
-  region,
-  userPoolId,
-  userWebClientId,
-} from './utility/envConfig';
 
 const LazyLoadedHome = React.lazy(() => import('./pages/Home'));
 const LazyLoadedCart = React.lazy(() => import('./pages/Cart'));
@@ -28,34 +21,26 @@ const LazyLoadedRecoverPassword = React.lazy(() =>
 const LazyLoadedAddEvent = React.lazy(() => import('./pages/AddEvent'));
 
 function App() {
-  const username = 'hkhoa';
-  const name = 'Khoa Nguyen';
-
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { getAllEvents, allEvents, getAvailableTags } =
     useContext(EventContext);
 
-  const { checkIfLoggedIn, storeUserToLocalStorage } = useContext(UserContext);
+  const { checkIfLoggedIn, allUsers, getAllUsers } = useContext(UserContext);
   // this use to check if user is logged in, can be used in different pages to persist user session
   useEffect(() => {
     async function handleCheckLogIn() {
-      await checkIfLoggedIn(setLoading);
+      await checkIfLoggedIn();
     }
     handleCheckLogIn();
   }, []);
 
-  // this use to persist user session even with refresh button pressed by using the local storage
-  useEffect(() => {
-    async function handleStoreUserToLocalStorage() {
-      await storeUserToLocalStorage(setLoading);
-    }
-    handleStoreUserToLocalStorage();
-  }, []);
-
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       await getAllEvents();
       await getAvailableTags();
+      await getAllUsers();
+      setLoading(false);
     };
     fetchData();
   }, []);
@@ -74,9 +59,9 @@ function App() {
           </Center>
         }
       >
-        {allEvents.length > 0 ? (
+        {!loading ? (
           <Routes>
-            <Route path="/" element={<LazyLoadedHome name={name} />} />
+            <Route path="/" element={<LazyLoadedHome />} />
             <Route path="/shopping-cart" element={<LazyLoadedCart />} />
             <Route path="/settings" element={<LazyLoadedSettings />} />
             {allEvents.map(e => (
@@ -86,7 +71,14 @@ function App() {
                 element={<LazyLoadedEventDetail event={e} />}
               />
             ))}
-            <Route path={`/${username}`} element={<LazyLoadedProfile />} />
+            {allUsers.map(u => (
+              <Route
+                key={nanoid()}
+                path={`/${u.user_name}`}
+                element={<LazyLoadedProfile username={u.user_name} />}
+              />
+            ))}
+
             <Route path={`/login`} element={<LazyLoadedLogin />} />
             <Route path={`/signup`} element={<LazyLoadedSignUp />} />
             <Route path={`/recover`} element={<LazyLoadedRecoverPassword />} />

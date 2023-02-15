@@ -203,8 +203,8 @@ function Cart() {
             4242 4242 4242 4242 - Exp: 01/50 - CVV: 123
           </div>
           <StripeCheckoutButton price={total} />
+          {/* <StripeCheckoutButton price={100} /> */}
           {/* <Button colorScheme="messenger">Proceed to checkout</Button> */}
-          <Button>Continue shopping</Button>
         </Stack>
       </Stack>
     </Center>

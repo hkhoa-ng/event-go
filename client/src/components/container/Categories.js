@@ -50,6 +50,14 @@ function Categories(props) {
         leftIcon={<FaHome />}
         justifyContent="flex-start"
       >
+        Discover people
+      </Button>
+      <Button
+        colorScheme="brand"
+        variant="ghost"
+        leftIcon={<FaHome />}
+        justifyContent="flex-start"
+      >
         All events
       </Button>
 
