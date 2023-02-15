@@ -43,7 +43,7 @@ function EventContainer(props) {
   return (
     <VStack m={10} mb={20}>
       <Heading textAlign="center">
-        {props.type.replace(/^\w/, c => c.toUpperCase())}
+        {props.type.replace(/^\w/, c => c.toUpperCase())} events
       </Heading>
 
       <SimpleGrid
@@ -53,18 +53,20 @@ function EventContainer(props) {
       >
         {elements}
       </SimpleGrid>
-      <HStack w="90%">
-        <Divider />
-        <Button
-          w={{ base: '60%', sm: '45%', md: '40%', lg: '35%', xl: '20%' }}
-          onClick={() => {
-            navigate(`/events/${props.type.replace(/\s+/g, '-')}`);
-          }}
-        >
-          Show more
-        </Button>
-        <Divider />
-      </HStack>
+      {props.showMore && (
+        <HStack w="90%">
+          <Divider />
+          <Button
+            w={{ base: '60%', sm: '45%', md: '40%', lg: '35%', xl: '20%' }}
+            onClick={() => {
+              navigate(`/events/${props.type.replace(/\s+/g, '-')}`);
+            }}
+          >
+            Show more
+          </Button>
+          <Divider />
+        </HStack>
+      )}
     </VStack>
   );
 }

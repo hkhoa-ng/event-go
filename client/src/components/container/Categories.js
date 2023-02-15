@@ -93,6 +93,9 @@ function Categories(props) {
                       colorScheme="gray"
                       variant="solid"
                       leftIcon={<FaHome />}
+                      onClick={() => {
+                        navigate(`/events/${tag.replace(/\s+/g, '-')}`);
+                      }}
                     >
                       {tag.replace(/^\w/, c => c.toUpperCase())}
                     </Button>

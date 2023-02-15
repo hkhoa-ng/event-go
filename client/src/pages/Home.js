@@ -10,22 +10,16 @@ import EventContext from '../context/EventContext';
 import UserContext from '../context/UserContext';
 import { nanoid } from 'nanoid';
 
-function Home(props) {
+function Home() {
   const { allEvents, availableTags } = useContext(EventContext);
-  const { checkIfLoggedIn, storeUserToLocalStorage } = useContext(UserContext);
-  const [loading, setLoading] = useState(false);
+  const { checkIfLoggedIn } = useContext(UserContext);
   // // this use to check if user is logged in, can be used in different pages to persist user session
   useEffect(() => {
     async function handleCheckLogIn() {
-      await checkIfLoggedIn(setLoading);
+      await checkIfLoggedIn();
     }
     handleCheckLogIn();
   }, []);
-
-  // // this use to persist user session even with refresh button pressed by using the local storage
-  // useEffect(() => {
-  //   storeUserToLocalStorage(setLoading);
-  // }, []);
 
   return (
     <Box>
@@ -56,7 +50,7 @@ function Home(props) {
         >
           <Carousel events={allEvents} />
           {availableTags.map(tag => {
-            return <EventContainer type={tag} key={nanoid()} />;
+            return <EventContainer type={tag} key={nanoid()} showMore={true} />;
           })}
         </Container>
       </Flex>

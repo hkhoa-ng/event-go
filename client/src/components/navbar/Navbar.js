@@ -106,54 +106,60 @@ const Navbar = () => {
                   />
                 </MenuButton>
                 <MenuList zIndex={5} bg="brand.600">
-                  <Link to={`/${username}`} _hover={{ textDecoration: 'none' }}>
-                    <MenuItem>
-                      <VStack justify="start" alignItems="left">
-                        <Text fontWeight="500">{name}</Text>
-                        <Text size="sm" color="gray.500" mt="0 !important">
-                          @{username}
-                        </Text>
-                      </VStack>
-                    </MenuItem>
-                  </Link>
+                  <MenuItem
+                    onClick={() => {
+                      navigate(`/${username}`);
+                    }}
+                    bg="brand.600"
+                  >
+                    <VStack justify="start" alignItems="left">
+                      <Text fontWeight="500">{name}</Text>
+                      <Text size="sm" color="gray.500" mt="0 !important">
+                        @{username}
+                      </Text>
+                    </VStack>
+                  </MenuItem>
                   <MenuDivider />
-                  <Link
-                    to={`/add`}
-                    _hover={{ textDecoration: 'none' }}
+
+                  <MenuItem
+                    onClick={() => {
+                      navigate(`/add`);
+                    }}
                     display={{ base: 'flex', md: 'none' }}
+                    bg="brand.600"
                   >
-                    <MenuItem display={{ base: 'flex', md: 'none' }}>
-                      <Text fontWeight="500">Add event</Text>
-                    </MenuItem>
-                  </Link>
+                    <Text fontWeight="500">Add event</Text>
+                  </MenuItem>
                   <MenuDivider />
-                  <Link to={`/`} _hover={{ textDecoration: 'none' }}>
-                    <MenuItem>
-                      <Text fontWeight="500">Home</Text>
-                    </MenuItem>
-                  </Link>
-                  <Link
-                    to={`/shopping-cart`}
-                    _hover={{ textDecoration: 'none' }}
+                  <MenuItem
+                    bg="brand.600"
+                    onClick={() => {
+                      navigate('/');
+                    }}
                   >
-                    <MenuItem>
-                      <Text fontWeight="500">Shopping Cart</Text>
-                    </MenuItem>
-                  </Link>
-                  <Link to={`/settings`} _hover={{ textDecoration: 'none' }}>
-                    <MenuItem>
-                      <Text fontWeight="500">Settings</Text>
-                    </MenuItem>
-                  </Link>
+                    <Text fontWeight="500">Home</Text>
+                  </MenuItem>
+                  <MenuItem
+                    bg="brand.600"
+                    onClick={() => {
+                      navigate('/shopping-cart');
+                    }}
+                  >
+                    <Text fontWeight="500">Shopping Cart</Text>
+                  </MenuItem>
+                  <MenuItem
+                    bg="brand.600"
+                    onClick={() => {
+                      navigate('/settings');
+                    }}
+                  >
+                    <Text fontWeight="500">Settings</Text>
+                  </MenuItem>
                   <MenuDivider />
-                  {/* <Link to={'/login'}>
-                    <MenuItem>
-                      <Text fontWeight="500">Login</Text>
-                    </MenuItem>
-                  </Link> */}
 
                   <MenuItem
                     as="button"
+                    bg="brand.600"
                     onClick={async () => {
                       await signOut();
                       navigate('/');
