@@ -85,7 +85,7 @@ function App() {
             {availableTags.map(t => (
               <Route
                 key={nanoid()}
-                path={`/events/${t.replace(/\s+/g, '-')}`}
+                path={`/${t.replace(/\s+/g, '-')}-events`}
                 element={<LazyLoadedEventsByTag tag={t} />}
               />
             ))}

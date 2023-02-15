@@ -64,7 +64,7 @@ function Categories(props) {
             leftIcon={<FaHome />}
             justifyContent="flex-start"
             onClick={() => {
-              navigate(`/events/${tag.replace(/\s+/g, '-')}`);
+              navigate(`/${tag.replace(/\s+/g, '-')}-events`);
             }}
           >
             {tag.replace(/^\w/, c => c.toUpperCase())}
@@ -94,7 +94,7 @@ function Categories(props) {
                       variant="solid"
                       leftIcon={<FaHome />}
                       onClick={() => {
-                        navigate(`/events/${tag.replace(/\s+/g, '-')}`);
+                        navigate(`/${tag.replace(/\s+/g, '-')}-events`);
                       }}
                     >
                       {tag.replace(/^\w/, c => c.toUpperCase())}
