@@ -25,12 +25,13 @@ export function UserProvider({ children }) {
 
   // this use to check if user is logged in, can be used in different pages to persist user session
   async function checkIfLoggedIn(setLoading) {
-    const user = await Auth.currentAuthenticatedUser().catch(err => err);
-    console.log('Checking if user logged in...');
-    console.log(user);
-    if (user !== 'The user is not authenticated') {
-      await setUser(user);
-    }
+    // const user = localStorage.get('user')
+    // console.log('Checking if user logged in...');
+    // console.log(user);
+    // if (user !== 'The user is not authenticated') {
+    //   console.log('The user is not authenticated')
+    //   // await setUser(user);
+    // }
     // .then(async user => {
     //   // const currUser = {
     //   //   attributes: user.attributes,
@@ -44,6 +45,17 @@ export function UserProvider({ children }) {
     //   setLoading(false);
     //   console.log(`Not signed in!`);
     // });
+    Auth.currentSession()
+    .then(session => {
+      setUser(session.getIdToken().payload);
+      console.log(user)
+
+      // setLoading(false);
+    })
+    .catch(() => {
+      console.log('fail refresh')
+      // setLoading(false);
+    });
   }
 
   // this use to persist user session even with refresh button pressed by using the local storage
@@ -123,8 +135,19 @@ export function UserProvider({ children }) {
       };
       console.table(newUserInfo);
       const { user } = await Auth.signUp(newUserInfo);
-      setUser(user);
-      console.log(user);
+  
+      Auth.currentSession()
+        .then(session => {
+          setUser(session.getIdToken().payload);
+          localStorage.setItem(
+            'user',
+            JSON.stringify(session.getIdToken().payload)
+          );
+
+        })
+        .catch((err) => {
+          console.log(err)
+        });
     } catch (error) {
       // will be an error if user email existed in database,
       setError(error);
@@ -192,6 +215,7 @@ export function UserProvider({ children }) {
       );
       // access user data here;
       console.log('Sign in successful');
+
       return 'Success!';
     } catch (err) {
       setError(err.message);

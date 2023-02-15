@@ -1,13 +1,12 @@
 import StripeCheckout from 'react-stripe-checkout';
 import { Button } from '@chakra-ui/react';
 import axios from 'axios';
+import { stripePublishableKey, stripePath } from '../../utility/envConfig';
 const StripeCheckoutButton = ({ price }) => {
   const priceForStripe = price * 100;
-  const publishableKey =
-    'pk_test_51KSjpCBYp3P0VPu4qlVoSK2SwYMcS0HMwJmI8bPOkJFGDtxyrgYvz2EZNKBeb8n916k41ucT3Wu9qKI3q3QWpklJ00khAWF3Xz';
   const onToken = token => {
     axios({
-      url: "http://localhost:1000/payment",
+      url: stripePath,
       method: "post",
       data: {
         amount: priceForStripe,
@@ -25,7 +24,7 @@ const StripeCheckoutButton = ({ price }) => {
       });
   };
   return (
-    <StripeCheckout
+    <StripeCheckout 
       // label="Proceed to checkout"
       name="Event Go Ltd."
       billingAddress
@@ -35,7 +34,7 @@ const StripeCheckoutButton = ({ price }) => {
       amount={priceForStripe}
       panelLabel="Pay Now"
       token={onToken}
-      stripeKey={publishableKey}
+      stripeKey={stripePublishableKey}
       currency="EUR"
     />
   );
