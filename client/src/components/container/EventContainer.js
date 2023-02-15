@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Heading,
   SimpleGrid,
@@ -16,6 +17,7 @@ function EventContainer(props) {
   const { allEvents, getEventsByTag } = useContext(EventContext);
   const [eventsOfTag, setEventsOfTag] = useState();
   const [elements, setElements] = useState();
+  const navigate = useNavigate();
 
   async function getEventsOfThisTag(tag) {
     const eventIds = await getEventsByTag(tag);
@@ -53,7 +55,12 @@ function EventContainer(props) {
       </SimpleGrid>
       <HStack w="90%">
         <Divider />
-        <Button w={{ base: '60%', sm: '45%', md: '40%', lg: '35%', xl: '20%' }}>
+        <Button
+          w={{ base: '60%', sm: '45%', md: '40%', lg: '35%', xl: '20%' }}
+          onClick={() => {
+            navigate(`/events/${props.type.replace(/\s+/g, '-')}`);
+          }}
+        >
           Show more
         </Button>
         <Divider />

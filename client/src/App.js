@@ -19,10 +19,14 @@ const LazyLoadedRecoverPassword = React.lazy(() =>
   import('./pages/RecoverPassword')
 );
 const LazyLoadedAddEvent = React.lazy(() => import('./pages/AddEvent'));
+const LazyLoadedEventsByTag = React.lazy(() => import('./pages/EventsByTags'));
+const LazyLoadedDiscoverPeople = React.lazy(() =>
+  import('./pages/DiscoverPeople')
+);
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const { getAllEvents, allEvents, getAvailableTags } =
+  const { getAllEvents, allEvents, getAvailableTags, availableTags } =
     useContext(EventContext);
 
   const { checkIfLoggedIn, allUsers, getAllUsers } = useContext(UserContext);
@@ -78,11 +82,19 @@ function App() {
                 element={<LazyLoadedProfile username={u.user_name} />}
               />
             ))}
+            {availableTags.map(t => (
+              <Route
+                key={nanoid()}
+                path={`/events/${t.replace(/\s+/g, '-')}`}
+                element={<LazyLoadedEventsByTag tag={t} />}
+              />
+            ))}
 
             <Route path={`/login`} element={<LazyLoadedLogin />} />
             <Route path={`/signup`} element={<LazyLoadedSignUp />} />
             <Route path={`/recover`} element={<LazyLoadedRecoverPassword />} />
             <Route path={`/add`} element={<LazyLoadedAddEvent />} />
+            <Route path={`/people`} element={<LazyLoadedDiscoverPeople />} />
           </Routes>
         ) : (
           <Center h="100vh">

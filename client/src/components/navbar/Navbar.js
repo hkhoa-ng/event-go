@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Container,
   Box,
@@ -20,7 +20,7 @@ import {
   InputLeftElement,
   IconButton,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+
 import { FaSearch, FaPrint, FaPlus, FaSignInAlt } from 'react-icons/fa';
 import UserContext from '../../context/UserContext';
 
@@ -87,13 +87,11 @@ const Navbar = () => {
               leftIcon={<FaPlus />}
               _hover={{ bg: 'frenchPink.400' }}
               display={{ base: 'none', md: 'flex' }}
+              onClick={() => {
+                navigate(user !== null ? `/add` : `/login`);
+              }}
             >
-              <Link
-                to={user !== null ? `/add` : `/login`}
-                _hover={{ textDecoration: 'none' }}
-              >
-                Add event
-              </Link>
+              Add event
             </Button>
 
             {/* Menu button: only display if user is signed in */}
@@ -167,25 +165,26 @@ const Navbar = () => {
               </Menu>
             ) : (
               <div>
-                <Link to={`/login`} _hover={{ textDecoration: 'none' }}>
-                  <Button
-                    rightIcon={<FaSignInAlt />}
-                    colorScheme="whatsapp"
-                    // variant="outline"
-                    display={{ base: 'none', md: 'flex' }}
-                  >
-                    Login
-                  </Button>
-                </Link>
+                <Button
+                  rightIcon={<FaSignInAlt />}
+                  colorScheme="whatsapp"
+                  // variant="outline"
+                  display={{ base: 'none', md: 'flex' }}
+                  onClick={() => {
+                    navigate(`/login`);
+                  }}
+                >
+                  Login
+                </Button>
 
-                <Link to={`/login`} _hover={{ textDecoration: 'none' }}>
-                  <IconButton
-                    colorScheme="whatsapp"
-                    icon={<FaSignInAlt />}
-                    // variant="outline"
-                    display={{ base: 'flex', md: 'none' }}
-                  />
-                </Link>
+                <IconButton
+                  colorScheme="whatsapp"
+                  icon={<FaSignInAlt />}
+                  onClick={() => {
+                    navigate(`/login`);
+                  }}
+                  display={{ base: 'flex', md: 'none' }}
+                />
               </div>
             )}
           </HStack>

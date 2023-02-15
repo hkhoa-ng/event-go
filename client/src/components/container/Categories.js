@@ -1,8 +1,6 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
-  Box,
-  Text,
-  Heading,
   Button,
   Flex,
   PopoverTrigger,
@@ -10,7 +8,6 @@ import {
   Popover,
   PopoverCloseButton,
   PopoverBody,
-  PopoverFooter,
   PopoverContent,
   PopoverArrow,
   PopoverHeader,
@@ -23,6 +20,7 @@ import { FiMoreHorizontal } from 'react-icons/fi';
 import { nanoid } from 'nanoid';
 
 function Categories(props) {
+  const navigate = useNavigate();
   return (
     <Flex
       flexDir={{ base: 'row', md: 'column' }}
@@ -49,16 +47,11 @@ function Categories(props) {
         variant="ghost"
         leftIcon={<FaHome />}
         justifyContent="flex-start"
+        onClick={() => {
+          navigate('/people');
+        }}
       >
         Discover people
-      </Button>
-      <Button
-        colorScheme="brand"
-        variant="ghost"
-        leftIcon={<FaHome />}
-        justifyContent="flex-start"
-      >
-        All events
       </Button>
 
       {props.tags.map(tag => {
@@ -70,6 +63,9 @@ function Categories(props) {
             variant="ghost"
             leftIcon={<FaHome />}
             justifyContent="flex-start"
+            onClick={() => {
+              navigate(`/events/${tag.replace(/\s+/g, '-')}`);
+            }}
           >
             {tag.replace(/^\w/, c => c.toUpperCase())}
           </Button>

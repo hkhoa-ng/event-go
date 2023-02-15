@@ -2,7 +2,7 @@ import React from 'react';
 import { Center } from '@chakra-ui/react';
 import Navbar from '../components/navbar/Navbar';
 
-function EventsByTags() {
+function DiscoverPeople() {
   return (
     <Center flexDir="column">
       <Navbar />
@@ -10,4 +10,4 @@ function EventsByTags() {
   );
 }
 
-export default EventsByTags;
+export default DiscoverPeople;
