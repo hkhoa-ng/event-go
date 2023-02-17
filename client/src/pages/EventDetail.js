@@ -18,7 +18,7 @@ import {
   Center,
 } from '@chakra-ui/react';
 import { FiHeart } from 'react-icons/fi';
-import { MdLocationOn } from 'react-icons/md';
+import { MdLocationOn, MdAdd } from 'react-icons/md';
 import { nanoid } from 'nanoid';
 import BuyTicketInput from '../components/inputs/BuyTicketInput';
 import Navbar from '../components/navbar/Navbar';
@@ -106,11 +106,11 @@ function EventDetail(props) {
               </HStack>
               <Button
                 display={{ base: 'none', md: 'flex' }}
-                leftIcon={<FiHeart />}
+                leftIcon={<MdAdd />}
                 fontSize={{ md: 'md', lg: 'lg' }}
                 colorScheme="telegram"
               >
-                Follow this event
+                Add to calendar
               </Button>
             </VStack>
           </HStack>

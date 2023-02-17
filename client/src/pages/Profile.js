@@ -94,11 +94,16 @@ function Profile({ username }) {
                 />
               )}
             </HStack>
-            <HStack>
-              <Text>15 friends</Text>
-              <Spacer />
-              {isCurrentUser && <Button>All Friends</Button>}
-            </HStack>
+
+            {isCurrentUser ? (
+              <HStack>
+                <Text>15 friends</Text>
+                <Spacer />
+                <Button>All Friends</Button>{' '}
+              </HStack>
+            ) : (
+              <Button>Add friend</Button>
+            )}
           </VStack>
         </Center>
       </Center>

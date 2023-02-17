@@ -49,8 +49,51 @@ export function UserProvider({ children }) {
     const allUsersRes = await axios.get(`${url}/users`, config);
 
     if (Array.isArray(allUsersRes.data.users)) {
-      setAllUsers([...allUsersRes.data.users]);
+      const allUsersData = await allUsersRes.data.users.map(async u => {
+        const allFriendsOfThisUser = await getAllFriendsOfUser(u.email);
+        const thisUser = {
+          ...u,
+          friends: allFriendsOfThisUser,
+        };
+        return thisUser;
+      });
+      Promise.all(allUsersData)
+        .then(res => {
+          setAllUsers([...res]);
+        })
+        .catch(err => {
+          console.error(err);
+        });
     }
+  }
+
+  async function getAllFriendsOfUser(userEmail) {
+    const allFriendsRes = await axios
+      .get(`${url}/user/friends?email=${userEmail}`, config)
+      // .get(`${url}/user/friends?email=heyimnotthanh@gmail.com`)
+      .catch(err =>
+        console.error(`Error while fetching friends of ${userEmail}: ${err}`)
+      );
+    return allFriendsRes.data;
+  }
+
+  async function addFriendToCurrentUser(emailToAdd) {
+    const data = [
+      {
+        userEmail: email,
+        friendEmail: emailToAdd,
+      },
+    ];
+    axios
+      .post(`${url}/user/friend`, data, config)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.error(
+          `Error while trying to add ${emailToAdd} as friend of ${email}: ${err}`
+        );
+      });
   }
 
   // TODO: function to get and fetch all user events
@@ -274,6 +317,8 @@ export function UserProvider({ children }) {
         // Working with all users
         allUsers,
         getAllUsers,
+        // Add friends
+        addFriendToCurrentUser,
       }}
     >
       {children}

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Card,
   Text,
@@ -13,8 +14,14 @@ import {
   HStack,
   AvatarGroup,
 } from '@chakra-ui/react';
+import UserContext from '../../context/UserContext';
 
-function PeopleCard({ fullname, username }) {
+function PeopleCard({ fullname, username, email, friends }) {
+  const { addFriendToCurrentUser, allUsers, user } = useContext(UserContext);
+  const currentUser = allUsers.find(u => u.email === user.attributes.email);
+  const mutualFriends = currentUser.friends.filter(f => friends.includes(f));
+
+  const navigate = useNavigate();
   return (
     <Stack
       p="0"
@@ -29,28 +36,58 @@ function PeopleCard({ fullname, username }) {
         borderTopRightRadius={{ base: '0px', md: 'lg' }}
         borderTopLeftRadius="lg"
         borderBottomLeftRadius={{ base: 'lg', md: '0px' }}
+        onClick={() => {
+          console.log('Chick!');
+          navigate(`/${username}`);
+        }}
+        _hover={{
+          cursor: 'pointer',
+        }}
       />
-      <Stack mt="6" spacing="3" px="0">
-        <Heading size="md">{fullname}</Heading>
-        {/* <HStack>
-          <AvatarGroup size="sm" max={2}>
-            <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
-            <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
-          </AvatarGroup>
+      <Stack mt="6" px="0">
+        <Heading
+          size="md"
+          onClick={() => {
+            console.log('Chick!');
+            navigate(`/${username}`);
+          }}
+          _hover={{
+            cursor: 'pointer',
+          }}
+        >
+          {fullname}
+        </Heading>
+        <HStack>
+          {mutualFriends.length > 0 && (
+            <AvatarGroup size="sm" max={2}>
+              {mutualFriends.map(f => (
+                <Avatar
+                  key={f}
+                  name="Ryan Florence"
+                  src="https://bit.ly/ryan-florence"
+                />
+              ))}
+            </AvatarGroup>
+          )}
           <Text size="sm" color="gray.400">
-            10 mutual friends
+            {mutualFriends.length === 0 ? 'No' : mutualFriends.length} mutual
+            friends
           </Text>
-        </HStack> */}
-        <Text size="sm" color="gray.400">
-          Connect with me!
-        </Text>
+        </HStack>
         <ButtonGroup spacing="2" w="100%" size={{ base: 'sm', md: 'md' }}>
-          <Button variant="solid" colorScheme="blue" w="50%">
+          <Button
+            variant="solid"
+            colorScheme="blue"
+            w="100%"
+            onClick={() => {
+              addFriendToCurrentUser(email);
+            }}
+          >
             Add friend
           </Button>
-          <Button w="50%" variant="outline">
+          {/* <Button w="50%" variant="outline">
             Remove
-          </Button>
+          </Button> */}
         </ButtonGroup>
       </Stack>
     </Stack>

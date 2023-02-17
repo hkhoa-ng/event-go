@@ -42,9 +42,7 @@ function Settings() {
     handleCheckLogIn();
   }, []);
   const { user } = useContext(UserContext);
-  console.log(user);
   const userInfo = user.attributes;
-  console.table(userInfo);
 
   return (
     <Center flexDir="column">

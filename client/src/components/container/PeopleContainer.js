@@ -9,19 +9,35 @@ import {
   Divider,
   Button,
 } from '@chakra-ui/react';
-import UserContext from '../../context/UserContext';
 import PeopleCard from '../cards/PeopleCard';
+import UserContext from '../../context/UserContext';
 
 function PeopleContainer({ title, showMore, users }) {
+  const { user } = useContext(UserContext);
+  const currentUser = users.find(u => u.email === user.attributes.email);
+
   const [elements, setElements] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
     setElements(
-      users.map(u => {
-        console.table(u);
-        return <PeopleCard fullname={u.full_name} username={u.user_name} />;
-      })
+      users
+        // First, filter users that are not the current logged in user
+        .filter(u => u.email !== currentUser.email)
+        // Then, filter users that are not friend with current logged in user
+        .filter(u => !currentUser.friends.includes(u))
+        .map(u => {
+          // console.table(u);
+          return (
+            <PeopleCard
+              key={u.user_name}
+              fullname={u.full_name}
+              username={u.user_name}
+              email={u.email}
+              friends={u.friends}
+            />
+          );
+        })
     );
   }, [users]);
 
