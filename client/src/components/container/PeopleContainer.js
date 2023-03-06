@@ -14,10 +14,9 @@ import UserContext from '../../context/UserContext';
 
 function PeopleContainer({ title, showMore, users }) {
   const { user } = useContext(UserContext);
-  const currentUser = users.find(u => u.email === user.attributes.email);
+  const currentUser = user ? user.attributes : null;
 
   const [elements, setElements] = useState();
-  const navigate = useNavigate();
 
   useEffect(() => {
     setElements(
@@ -25,7 +24,7 @@ function PeopleContainer({ title, showMore, users }) {
         // First, filter users that are not the current logged in user
         .filter(u => u.email !== currentUser.email)
         // Then, filter users that are not friend with current logged in user
-        .filter(u => !currentUser.friends.includes(u))
+        .filter(u => !currentUser.friends.includes(u.email))
         .map(u => {
           // console.table(u);
           return (
@@ -35,6 +34,7 @@ function PeopleContainer({ title, showMore, users }) {
               username={u.user_name}
               email={u.email}
               friends={u.friends}
+              button={'Add friend'}
             />
           );
         })

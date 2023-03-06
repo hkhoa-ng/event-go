@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Button,
@@ -15,12 +15,22 @@ import {
   Divider,
   IconButton,
 } from '@chakra-ui/react';
+import UserContext from '../../context/UserContext';
 import { FaHome } from 'react-icons/fa';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { nanoid } from 'nanoid';
 
 function Categories(props) {
+  const { checkIfLoggedIn, user } = useContext(UserContext);
   const navigate = useNavigate();
+  // // this use to check if user is logged in, can be used in different pages to persist user session
+  useEffect(() => {
+    async function handleCheckLogIn() {
+      await checkIfLoggedIn();
+    }
+    handleCheckLogIn();
+  }, []);
+
   return (
     <Flex
       flexDir={{ base: 'row', md: 'column' }}
@@ -45,10 +55,11 @@ function Categories(props) {
       <Button
         colorScheme="brand"
         variant="ghost"
-        leftIcon={<FaHome />}
+        // leftIcon={<FaHome />}
         justifyContent="flex-start"
+        color="gray.300"
         onClick={() => {
-          navigate('/people');
+          navigate(user ? '/people' : '/login');
         }}
       >
         Discover people
@@ -61,7 +72,8 @@ function Categories(props) {
             display={{ base: 'none', md: 'flex' }}
             colorScheme="brand"
             variant="ghost"
-            leftIcon={<FaHome />}
+            // leftIcon={<FaHome />}
+            color="gray.300"
             justifyContent="flex-start"
             onClick={() => {
               navigate(`/${tag.replace(/\s+/g, '-')}-events`);
@@ -92,7 +104,8 @@ function Categories(props) {
                       key={nanoid()}
                       colorScheme="gray"
                       variant="solid"
-                      leftIcon={<FaHome />}
+                      // leftIcon={<FaHome />}
+                      color="gray.300"
                       onClick={() => {
                         navigate(`/${tag.replace(/\s+/g, '-')}-events`);
                       }}

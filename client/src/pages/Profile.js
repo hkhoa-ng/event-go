@@ -13,12 +13,14 @@ import {
   IconButton,
 } from '@chakra-ui/react';
 import { FaRegEdit } from 'react-icons/fa';
-
 import Calendar from 'react-calendar';
 import '../styles/Calendar.css';
 
 import Navbar from '../components/navbar/Navbar';
 import UserContext from '../context/UserContext';
+import MyEvents from '../components/container/profile/MyEvents';
+import { useNavigate } from 'react-router-dom';
+import MyFriends from '../components/container/profile/MyFriends';
 function Profile({ username }) {
   const { checkIfLoggedIn, user, allUsers } = useContext(UserContext);
   // // this use to check if user is logged in, can be used in different pages to persist user session
@@ -28,18 +30,19 @@ function Profile({ username }) {
     }
     handleCheckLogIn();
   }, []);
+  const navigate = useNavigate();
 
   // Find the user of this profile
   const userOfThisProfile = allUsers.find(u => u.user_name === username);
-  const isCurrentUser = user.attributes.preferred_username == username;
+  const isCurrentUser = user.attributes.preferred_username === username;
 
-  console.log(
-    `User of this profile is ${userOfThisProfile.user_name}, that is ${
-      isCurrentUser ? 'the' : 'not the'
-    } current user`
-  );
+  const [show, setShow] = useState('events');
 
-  console.table(userOfThisProfile);
+  // console.log(
+  //   `User of this profile is ${userOfThisProfile.user_name}, that is ${
+  //     isCurrentUser ? 'the' : 'not the'
+  //   } current user`
+  // );
 
   return (
     <Center flexDir="column">
@@ -91,15 +94,24 @@ function Profile({ username }) {
                   variant="ghost"
                   aria-label="Edit Profile"
                   icon={<FaRegEdit />}
+                  onClick={() => {
+                    navigate('/settings');
+                  }}
                 />
               )}
             </HStack>
 
             {isCurrentUser ? (
               <HStack>
-                <Text>15 friends</Text>
+                <Text>{`${userOfThisProfile.friends.length} friends`}</Text>
                 <Spacer />
-                <Button>All Friends</Button>{' '}
+                <Button
+                  onClick={() => {
+                    setShow(show === 'events' ? 'friends' : 'events');
+                  }}
+                >
+                  {show === 'events' ? 'All Friends' : 'Your events'}
+                </Button>{' '}
               </HStack>
             ) : (
               <Button>Add friend</Button>
@@ -111,37 +123,11 @@ function Profile({ username }) {
       {/* Content */}
 
       {isCurrentUser ? (
-        <Flex
-          w={{ base: '100vw', md: '80vw', xl: '70vw' }}
-          mt={{ base: '100px', md: '120px' }}
-          flexDir={{ base: 'column', lg: 'row' }}
-          alignItems={{ base: 'center', lg: 'flex-start' }}
-          gap={{ base: '10px', lg: '0px' }}
-        >
-          <Box w={{ base: '80%', lg: '40%' }}>
-            <Calendar locale="en-GB" />
-          </Box>
-          <Spacer />
-          <Box h="100%" w={{ base: '80%', lg: '55%' }}>
-            <VStack gap="0.5em">
-              <Heading
-                w="100%"
-                textAlign={{ base: 'center', lg: 'left' }}
-                fontSize={{ base: '1.5rem', lg: '2rem' }}
-              >
-                Your day at a glance
-              </Heading>
-              <Text textAlign="left">
-                Anim dolor dolore irure qui tempor. Est tempor ipsum consequat
-                magna elit dolor sunt id veniam do dolor aliqua.
-              </Text>
-              <Text textAlign="left">
-                Nisi cupidatat aute dolore reprehenderit minim nostrud cillum
-                nisi duis. Ea ea dolore consectetur commodo ad ipsum deserunt.
-              </Text>
-            </VStack>
-          </Box>
-        </Flex>
+        show === 'events' ? (
+          <MyEvents />
+        ) : (
+          <MyFriends />
+        )
       ) : (
         <Flex
           w={{ base: '100vw', md: '80vw', xl: '70vw' }}

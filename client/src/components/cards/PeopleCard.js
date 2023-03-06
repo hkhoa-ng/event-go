@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Card,
@@ -16,10 +16,12 @@ import {
 } from '@chakra-ui/react';
 import UserContext from '../../context/UserContext';
 
-function PeopleCard({ fullname, username, email, friends }) {
-  const { addFriendToCurrentUser, allUsers, user } = useContext(UserContext);
+function PeopleCard({ fullname, username, email, friends, button }) {
+  const { addFriendToUser, deleteFriendFromUser, allUsers, user } =
+    useContext(UserContext);
   const currentUser = allUsers.find(u => u.email === user.attributes.email);
   const mutualFriends = currentUser.friends.filter(f => friends.includes(f));
+  const [buttonText, setButtonText] = useState(button);
 
   const navigate = useNavigate();
   return (
@@ -76,14 +78,22 @@ function PeopleCard({ fullname, username, email, friends }) {
         </HStack>
         <ButtonGroup spacing="2" w="100%" size={{ base: 'sm', md: 'md' }}>
           <Button
+            isDisabled={buttonText === button ? false : true}
             variant="solid"
             colorScheme="blue"
             w="100%"
             onClick={() => {
-              addFriendToCurrentUser(email);
+              if (button === 'Add friend') {
+                addFriendToUser(user.attributes.email, email);
+                setButtonText('Friend added!');
+              } else if (button === 'Unfriend') {
+                // TODO: unfriend user
+                deleteFriendFromUser(user.attributes.email, email);
+                setButtonText('Friend removed!');
+              }
             }}
           >
-            Add friend
+            {buttonText}
           </Button>
           {/* <Button w="50%" variant="outline">
             Remove

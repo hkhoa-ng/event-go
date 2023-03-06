@@ -23,16 +23,29 @@ import { nanoid } from 'nanoid';
 import BuyTicketInput from '../components/inputs/BuyTicketInput';
 import Navbar from '../components/navbar/Navbar';
 import UserContext from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
+
 function EventDetail(props) {
-  const { checkIfLoggedIn, storeUserToLocalStorage } = useContext(UserContext);
-  const [loading, setLoading] = useState(false);
+  const { checkIfLoggedIn, user, addEventToUser } = useContext(UserContext);
+  const navigate = useNavigate();
   // // this use to check if user is logged in, can be used in different pages to persist user session
   useEffect(() => {
     async function handleCheckLogIn() {
-      await checkIfLoggedIn(setLoading);
+      await checkIfLoggedIn();
     }
     handleCheckLogIn();
   }, []);
+
+  const userInfo = user != null ? user.attributes : null;
+
+  function handleAddToCalendar() {
+    if (userInfo != null) {
+      addEventToUser(userInfo.email, props.event.event_id);
+      console.log(`Added to ${userInfo.name}'s calendar!`);
+    } else {
+      navigate('/login');
+    }
+  }
   return (
     <Center>
       <Navbar />
@@ -109,6 +122,9 @@ function EventDetail(props) {
                 leftIcon={<MdAdd />}
                 fontSize={{ md: 'md', lg: 'lg' }}
                 colorScheme="telegram"
+                onClick={() => {
+                  handleAddToCalendar();
+                }}
               >
                 Add to calendar
               </Button>

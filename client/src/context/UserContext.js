@@ -77,21 +77,41 @@ export function UserProvider({ children }) {
     return allFriendsRes.data;
   }
 
-  async function addFriendToCurrentUser(emailToAdd) {
-    const data = [
-      {
-        userEmail: email,
-        friendEmail: emailToAdd,
-      },
-    ];
+  async function addFriendToUser(userEmail, friendEmail) {
+    const data = {
+      userEmail: userEmail,
+      friendEmail: friendEmail,
+    };
     axios
       .post(`${url}/user/friend`, data, config)
       .then(res => {
+        console.log(
+          `Successfully added ${friendEmail} as a friend to ${userEmail}`
+        );
         console.log(res.data);
       })
       .catch(err => {
         console.error(
-          `Error while trying to add ${emailToAdd} as friend of ${email}: ${err}`
+          `Error while trying to add ${friendEmail} as friend of ${userEmail}: ${err}`
+        );
+      });
+  }
+
+  async function deleteFriendFromUser(userEmail, friendEmail) {
+    axios
+      .delete(
+        `${url}/user/friend?user_email=${userEmail}&friend_email=${friendEmail}`,
+        config
+      )
+      .then(res => {
+        console.log(
+          `Successfully deleted ${friendEmail} from ${userEmail} friend list`
+        );
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.error(
+          `Error while trying to delete ${friendEmail} from ${userEmail} friend list: ${err}`
         );
       });
   }
@@ -99,11 +119,32 @@ export function UserProvider({ children }) {
   // TODO: function to get and fetch all user events
 
   // this use to check if user is logged in, can be used in different pages to persist user session
+  // async function checkIfLoggedIn() {
+  //   const user = await Auth.currentAuthenticatedUser().catch(err => err);
+  //   console.log('Checking if user logged in...');
+  //   if (user !== 'The user is not authenticated') {
+  //     const allFriendsOfThisUser = await getAllFriendsOfUser(
+  //       user.attributes.email
+  //     );
+  //     user.attributes.friends = allFriendsOfThisUser;
+  //     await setUser(user);
+  //     return true
+  //   }
+  //   return false
+  // }
   async function checkIfLoggedIn() {
-    const user = await Auth.currentAuthenticatedUser().catch(err => err);
-    console.log('Checking if user logged in...');
-    if (user !== 'The user is not authenticated') {
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      console.log('Checking if user logged in...');
+      const allFriendsOfThisUser = await getAllFriendsOfUser(
+        user.attributes.email
+      );
+      user.attributes.friends = allFriendsOfThisUser;
       await setUser(user);
+      return true;
+    } catch (err) {
+      console.log(err);
+      return false;
     }
   }
 
@@ -274,6 +315,24 @@ export function UserProvider({ children }) {
     return regex.test(dob);
   }
 
+  function addEventToUser(userEmail, eventId) {
+    const data = {
+      userEmail: userEmail,
+      eventID: eventId,
+    };
+    axios
+      .post(`${url}/user/event`, data, config)
+      .then(res => {
+        console.log(`Added event ID ${eventId} to user ${userEmail} success!
+The response is: ${res.data}`);
+      })
+      .catch(err => {
+        console.error(
+          `Error while trying to add event ID:${eventId} to user ${userEmail}: ${err}`
+        );
+      });
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -318,7 +377,11 @@ export function UserProvider({ children }) {
         allUsers,
         getAllUsers,
         // Add friends
-        addFriendToCurrentUser,
+        addFriendToUser,
+        // Unfriend
+        deleteFriendFromUser,
+        // Add events
+        addEventToUser,
       }}
     >
       {children}

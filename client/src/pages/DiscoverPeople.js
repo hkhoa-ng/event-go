@@ -6,10 +6,14 @@ import EventContext from '../context/EventContext';
 import UserContext from '../context/UserContext';
 import Categories from '../components/container/Categories';
 import PeopleContainer from '../components/container/PeopleContainer';
+import { useNavigate } from 'react-router-dom';
+import { ThemeContext } from '@emotion/react';
 
 function DiscoverPeople() {
-  const { availableTags } = useContext(EventContext);
+  const { availableTags, user } = useContext(EventContext);
   const { allUsers, checkIfLoggedIn } = useContext(UserContext);
+  const currentUser = user ? user.attributes : null;
+
   // // this use to check if user is logged in, can be used in different pages to persist user session
   useEffect(() => {
     async function handleCheckLogIn() {
