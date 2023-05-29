@@ -1,18 +1,28 @@
-import { ColorModeScript } from '@chakra-ui/react';
-import React, { StrictMode } from 'react';
-import * as ReactDOM from 'react-dom/client';
-import App from './App';
-import myTheme from './styles/theme';
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { ColorModeScript } from '@chakra-ui/react';
 import { EventProvider } from './context/EventContext';
 import { ShoppingCartProvider } from './context/ShoppingCartContext';
 import { UserProvider } from './context/UserContext';
+import ReactGA from 'react-ga';
+import App from './App';
+import myTheme from './styles/theme';
 
 const container = document.getElementById('root');
-const root = ReactDOM.createRoot(container);
 
-root.render(
-  <StrictMode>
+const initGoogleAnalytics = () => {
+  // Replace 'YOUR_TRACKING_ID' with your Google Analytics tracking ID
+  const trackingId = 'G-84SMNZL3FD';
+  ReactGA.initialize(trackingId);
+};
+
+const Root = () => {
+  useEffect(() => {
+    initGoogleAnalytics();
+  }, []);
+
+  return (
     <BrowserRouter>
       <EventProvider>
         <ShoppingCartProvider>
@@ -25,5 +35,7 @@ root.render(
         </ShoppingCartProvider>
       </EventProvider>
     </BrowserRouter>
-  </StrictMode>
-);
+  );
+};
+
+ReactDOM.render(<Root />, container);
